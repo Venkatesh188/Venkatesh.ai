@@ -1,0 +1,27 @@
+<<<<<<< Updated upstream
+version: '3.8'
+
+services:
+  jekyll:
+    image: jekyll/jekyll:latest
+    container_name: jekyll_blog
+    command: jekyll serve --force_polling --livereload --drafts
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/srv/jekyll
+    restart: unless-stopped
+=======
+version: '3.8'
+
+services:
+  jekyll:
+    image: jekyll/jekyll:latest
+    container_name: jekyll_blog
+    command: jekyll serve --force_polling --livereload --drafts
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/srv/jekyll
+    restart: unless-stopped
+>>>>>>> Stashed changes

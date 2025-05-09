@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Manager - Venkatesh Shivandi</title>
+  <!-- Include the Netlify Identity Widget -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    /* Custom styles for the CMS interface */
+    .custom-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #343a40;
+      color: white;
+      padding: 10px 20px;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .custom-header .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .custom-header .logo img {
+      max-height: 40px;
+      margin-right: 10px;
+    }
+    
+    .custom-header .nav-buttons {
+      display: flex;
+    }
+    
+    .custom-button {
+      margin-left: 10px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .dashboard-btn {
+      background-color: #3742fa;
+      color: white;
+    }
+    
+    .dashboard-btn:hover {
+      background-color: #2e36c9;
+    }
+    
+    .logout-btn {
+      background-color: #e74c3c;
+      color: white;
+    }
+    
+    .logout-btn:hover {
+      background-color: #c0392b;
+    }
+    
+    /* Add spacing for CMS content */
+    body {
+      padding-top: 60px;
+    }
+
+    /* Loading and auth screens */
+    .auth-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid rgba(0, 0, 0, 0.1);
+      border-top-color: #3742fa;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .auth-message {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .auth-button {
+      padding: 10px 20px;
+      background-color: #3742fa;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .auth-button:hover {
+      background-color: #2e36c9;
+    }
+  </style>
+</head>
+<body>
+  <!-- Custom header -->
+  <div class="custom-header">
+    <div class="logo">
+      <img src="../assets/images/logo.png" alt="Venkatesh Shivandi" />
+      <h3>Netlify CMS</h3>
+    </div>
+    <div class="nav-buttons">
+      <button class="custom-button dashboard-btn" onclick="goToDashboard()">Back to Dashboard</button>
+      <button class="custom-button logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- Authentication loading screen -->
+  <div id="auth-screen" class="auth-screen">
+    <div class="spinner"></div>
+    <div id="auth-message" class="auth-message">Checking authentication...</div>
+    <button id="auth-button" class="auth-button" style="display: none" onclick="authenticateWithGitHub()">
+      Connect to GitHub
+    </button>
+  </div>
+
+  <!-- Include the script that builds the page and powers Netlify CMS -->
+  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  
+  <script>
+    // Check authentication before loading CMS
+    if (localStorage.getItem('adminLoggedIn') !== 'true') {
+      // Not logged in, redirect to login page
+      window.location.href = '/admin/';
+    }
+    
+    // Navigation functions
+    function goToDashboard() {
+      window.location.href = 'dashboard.html';
+    }
+    
+    function logout() {
+      // Clear all auth tokens
+      localStorage.removeItem('adminLoggedIn');
+      sessionStorage.removeItem('githubToken');
+      
+      // Clear Netlify Identity if available
+      if (window.netlifyIdentity) {
+        netlifyIdentity.logout();
+      }
+      
+      // Redirect to login
+      window.location.href = '/admin/';
+    }
+    
+    // Auth state for GitHub
+    let isAuthenticated = false;
+    let authToken = '';
+    
+    // Function to handle GitHub authentication
+    async function authenticateWithGitHub() {
+      const authScreen = document.getElementById('auth-screen');
+      const authMessage = document.getElementById('auth-message');
+      const authButton = document.getElementById('auth-button');
+      
+      authMessage.innerText = 'Connecting to GitHub...';
+      authButton.style.display = 'none';
+      
+      try {
+        // Initialize Netlify Identity
+        if (window.netlifyIdentity) {
+          netlifyIdentity.open();
+          
+          // Listen for auth events
+          netlifyIdentity.on('login', user => {
+            if (user) {
+              // Get the token from the user
+              const token = user.token?.access_token;
+              
+              if (token) {
+                // Store token for use in dashboard
+                sessionStorage.setItem('githubToken', token);
+                authToken = token;
+                isAuthenticated = true;
+                
+                // Update UI
+                authMessage.innerText = 'Successfully connected to GitHub!';
+                setTimeout(() => {
+                  authScreen.style.display = 'none';
+                }, 1500);
+              } else {
+                throw new Error('No access token found');
+              }
+            }
+          });
+        } else {
+          throw new Error('Netlify Identity not available');
+        }
+      } catch (error) {
+        console.error('Authentication error:', error);
+        authMessage.innerText = 'Authentication failed: ' + error.message;
+        authButton.style.display = 'block';
+      }
+    }
+    
+    // Initialize authentication
+    document.addEventListener('DOMContentLoaded', async () => {
+      const authScreen = document.getElementById('auth-screen');
+      const authMessage = document.getElementById('auth-message');
+      const authButton = document.getElementById('auth-button');
+      
+      try {
+        // Check if we already have a token
+        const existingToken = sessionStorage.getItem('githubToken');
+        
+        if (existingToken) {
+          authToken = existingToken;
+          isAuthenticated = true;
+          authMessage.innerText = 'Already authenticated with GitHub';
+          setTimeout(() => {
+            authScreen.style.display = 'none';
+          }, 1500);
+        } else {
+          // No token, show auth button
+          authMessage.innerText = 'Please connect to GitHub to manage content';
+          authButton.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Init error:', error);
+        authMessage.innerText = 'Error initializing authentication';
+        authButton.style.display = 'block';
+      }
+    });
+    
+    // Configure CMS
+    // We're adding a delay to ensure Netlify CMS is fully loaded
+    setTimeout(() => {
+      if (window.CMS) {
+        // Register preview styles
+        CMS.registerPreviewStyle("/assets/css/main.css");
+        
+        // Override authentication so it works with our login system
+        CMS.registerBackend('github', {
+          init: () => ({
+            isAuthenticated: () => isAuthenticated,
+            token: () => authToken,
+            logout: () => {
+              isAuthenticated = false;
+              authToken = '';
+              sessionStorage.removeItem('githubToken');
+              window.location.href = '/admin/';
+            }
+          })
+        });
+        
+        // Better previews for posts
+        CMS.registerPreviewTemplate("post", function(props) {
+          return `
+            <div class="post-preview">
+              <h1>${props.entry.getIn(['data', 'title'])}</h1>
+              <div class="post-content">
+                ${props.widgetFor('body')}
+              </div>
+            </div>
+          `;
+        });
+      }
+    }, 2000);
+  </script>
+</body>
+</html> 

@@ -1,0 +1,2684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Venkatesh Shivandi</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .admin-sidebar {
+      background-color: #343a40;
+      color: white;
+      min-height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      padding-top: 20px;
+      z-index: 1000;
+    }
+    .admin-content {
+      margin-left: 250px;
+      padding: 20px;
+      padding-bottom: 60px;
+    }
+    .admin-logo {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 20px;
+    }
+    .admin-logo img {
+      max-width: 120px;
+      margin-bottom: 10px;
+    }
+    .admin-logo h4 {
+      color: white;
+      font-size: 18px;
+      margin: 0;
+    }
+    .nav-link {
+      color: rgba(255,255,255,0.8);
+      padding: 10px 20px;
+      border-radius: 0;
+      transition: all 0.3s;
+    }
+    .nav-link:hover, .nav-link.active {
+      background-color: rgba(255,255,255,0.1);
+      color: white;
+    }
+    .nav-link i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+    .logout-link {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+    .logout-link .nav-link {
+      color: #dc3545;
+    }
+    .logout-link .nav-link:hover {
+      background-color: rgba(220, 53, 69, 0.1);
+    }
+    .card {
+      margin-bottom: 20px;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+      background-color: white;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-weight: 600;
+    }
+    .table th {
+      font-weight: 600;
+      color: #495057;
+    }
+    .btn-icon {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
+    
+    /* Dashboard Specific Styles */
+    .content-section {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .content-preview {
+      background-color: #f8f9fa;
+      border-radius: 4px;
+      padding: 20px;
+      min-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .content-preview h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    .content-preview h2 {
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .content-preview p {
+      margin-bottom: 1rem;
+    }
+    
+    .editor-toolbar {
+      background-color: #f8f9fa;
+      padding: 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    
+    /* Activity Icons */
+    .activity-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    
+    .bg-primary {
+      background-color: #3742fa !important;
+    }
+    
+    .bg-info {
+      background-color: #5352ed !important;
+    }
+    
+    /* Make tabs look better */
+    .nav-tabs .nav-link {
+      color: #495057;
+      border-radius: 0;
+      border-top-left-radius: 0.25rem;
+      border-top-right-radius: 0.25rem;
+    }
+    
+    .nav-tabs .nav-link.active {
+      font-weight: 600;
+      color: #3742fa;
+      border-bottom-color: white;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      .admin-sidebar {
+        width: 70px;
+        overflow: hidden;
+      }
+      .admin-sidebar .nav-link span {
+        display: none;
+      }
+      .admin-sidebar .nav-link i {
+        margin-right: 0;
+        font-size: 1.2rem;
+      }
+      .admin-logo img {
+        max-width: 40px;
+      }
+      .admin-logo h4 {
+        display: none;
+      }
+      .admin-content {
+        margin-left: 70px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .admin-sidebar {
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 60px;
+        min-height: auto;
+        display: flex;
+        align-items: center;
+        padding: 0;
+        z-index: 1000;
+      }
+      .admin-sidebar .admin-logo {
+        display: none;
+      }
+      .admin-sidebar .nav {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        padding: 0 10px;
+      }
+      .admin-sidebar .nav-item {
+        text-align: center;
+      }
+      .admin-sidebar .nav-link {
+        padding: 10px;
+      }
+      .admin-sidebar .nav-link i {
+        margin: 0;
+      }
+      .logout-link {
+        position: relative;
+        bottom: auto;
+        width: auto;
+      }
+      .admin-content {
+        margin-left: 0;
+        margin-bottom: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="admin-dashboard">
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+      <div class="admin-logo">
+        <img src="/assets/images/logo.png" alt="Venkatesh Shivandi">
+        <h4>Admin Panel</h4>
+      </div>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a href="#" class="nav-link" @click.prevent="activePage = 'dashboard'" :class="{'active': activePage === 'dashboard'}">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" @click.prevent="activePage = 'posts'" :class="{'active': activePage === 'posts'}">
+            <i class="fas fa-file-alt"></i> Posts
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" @click.prevent="activePage = 'new-post'" :class="{'active': activePage === 'new-post'}">
+            <i class="fas fa-plus-circle"></i> New Post
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" @click.prevent="activePage = 'comments'" :class="{'active': activePage === 'comments'}">
+            <i class="fas fa-comments"></i> Comments
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" @click.prevent="activePage = 'categories'" :class="{'active': activePage === 'categories'}">
+            <i class="fas fa-tags"></i> Categories
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" @click.prevent="activePage = 'settings'" :class="{'active': activePage === 'settings'}">
+            <i class="fas fa-cog"></i> Settings
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" @click.prevent="activePage = 'profile'" :class="{'active': activePage === 'profile'}">
+            <i class="fas fa-user"></i> Profile
+          </a>
+        </li>
+      </ul>
+      <div class="logout-link">
+        <a href="#" class="nav-link" @click.prevent="logout">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="admin-content">
+      <!-- Dashboard Home -->
+      <div v-if="activePage === 'dashboard'" class="content-section">
+        <h2 class="mb-4">Dashboard</h2>
+        
+        <!-- GitHub Connection Alert -->
+        <div v-if="!isGitHubConnected" class="alert alert-warning mb-4">
+          <h5 class="alert-heading"><i class="fab fa-github me-2"></i>GitHub Connection Required</h5>
+          <p>To manage posts and upload images, you need to connect to GitHub first. This will allow you to edit the actual content on your blog.</p>
+          <div class="d-flex">
+            <button class="btn btn-primary me-2" @click="connectToGitHub" :disabled="githubLoading">
+              <span v-if="githubLoading"><i class="fas fa-spinner fa-spin me-2"></i>Connecting...</span>
+              <span v-else><i class="fas fa-plug me-2"></i>Connect to GitHub</span>
+            </button>
+            <a href="netlify-cms.html" class="btn btn-outline-secondary">
+              <i class="fas fa-external-link-alt me-2"></i>Use Netlify CMS
+            </a>
+          </div>
+          <div v-if="githubError" class="text-danger mt-2">
+            <small><i class="fas fa-exclamation-circle me-1"></i>{{ githubError }}</small>
+          </div>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card text-white bg-primary mb-4">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title mb-0">Total Posts</h6>
+                    <h2 class="mt-2 mb-0">{{ posts.length }}</h2>
+                  </div>
+                  <i class="fas fa-file-alt fa-3x opacity-50"></i>
+                </div>
+                <div class="mt-3 small">
+                  <span class="me-2">
+                    <i class="fas fa-arrow-up me-1" v-if="postGrowth > 0"></i>
+                    <i class="fas fa-arrow-down me-1" v-if="postGrowth < 0"></i>
+                    <i class="fas fa-minus me-1" v-if="postGrowth === 0"></i>
+                    {{ Math.abs(postGrowth) }}%
+                  </span>
+                  compared to previous month
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-top-0">
+                <a href="#" class="text-white d-flex align-items-center" @click.prevent="activePage = 'posts'">
+                  <span>View all posts</span>
+                  <i class="fas fa-arrow-right ms-auto"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-success mb-4">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title mb-0">Comments</h6>
+                    <h2 class="mt-2 mb-0">{{ comments.length }}</h2>
+                  </div>
+                  <i class="fas fa-comments fa-3x opacity-50"></i>
+                </div>
+                <div class="mt-3 small">
+                  <span class="me-2">
+                    <i class="fas fa-arrow-up me-1" v-if="commentGrowth > 0"></i>
+                    <i class="fas fa-arrow-down me-1" v-if="commentGrowth < 0"></i>
+                    <i class="fas fa-minus me-1" v-if="commentGrowth === 0"></i>
+                    {{ Math.abs(commentGrowth) }}%
+                  </span>
+                  compared to previous month
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-top-0">
+                <a href="#" class="text-white d-flex align-items-center" @click.prevent="activePage = 'comments'">
+                  <span>Manage comments</span>
+                  <i class="fas fa-arrow-right ms-auto"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-info mb-4">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title mb-0">Page Views</h6>
+                    <h2 class="mt-2 mb-0">{{ pageViews }}</h2>
+                  </div>
+                  <i class="fas fa-chart-line fa-3x opacity-50"></i>
+                </div>
+                <div class="mt-3 small">
+                  <span class="me-2">
+                    <i class="fas fa-arrow-up me-1" v-if="pageViewGrowth > 0"></i>
+                    <i class="fas fa-arrow-down me-1" v-if="pageViewGrowth < 0"></i>
+                    <i class="fas fa-minus me-1" v-if="pageViewGrowth === 0"></i>
+                    {{ Math.abs(pageViewGrowth) }}%
+                  </span>
+                  compared to previous week
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-top-0">
+                <a href="#" class="text-white d-flex align-items-center" @click.prevent="activePage = 'statistics'">
+                  <span>View analytics</span>
+                  <i class="fas fa-arrow-right ms-auto"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-warning mb-4">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title mb-0">Subscribers</h6>
+                    <h2 class="mt-2 mb-0">{{ subscriberCount }}</h2>
+                  </div>
+                  <i class="fas fa-users fa-3x opacity-50"></i>
+                </div>
+                <div class="mt-3 small">
+                  <span class="me-2">
+                    <i class="fas fa-arrow-up me-1" v-if="subscriberGrowth > 0"></i>
+                    <i class="fas fa-arrow-down me-1" v-if="subscriberGrowth < 0"></i>
+                    <i class="fas fa-minus me-1" v-if="subscriberGrowth === 0"></i>
+                    {{ Math.abs(subscriberGrowth) }}%
+                  </span>
+                  compared to previous month
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-top-0">
+                <a href="#" class="text-white d-flex align-items-center" @click.prevent="activePage = 'subscribers'">
+                  <span>Manage subscribers</span>
+                  <i class="fas fa-arrow-right ms-auto"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Traffic Chart -->
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card mb-4">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Traffic Overview</h5>
+                <div>
+                  <select class="form-select form-select-sm" v-model="trafficPeriod">
+                    <option value="7">Last 7 days</option>
+                    <option value="30">Last 30 days</option>
+                    <option value="90">Last 90 days</option>
+                  </select>
+                </div>
+              </div>
+              <div class="card-body">
+                <canvas id="trafficChart" height="250"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Top Posts</h5>
+              </div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item px-0" v-for="(post, index) in topPosts" :key="post.id">
+                    <div class="d-flex align-items-center">
+                      <div class="rounded-circle bg-secondary bg-opacity-10 text-center me-3" 
+                        style="width: 32px; height: 32px; line-height: 32px;">
+                        {{ index + 1 }}
+                      </div>
+                      <div>
+                        <h6 class="mb-0 text-truncate" style="max-width: 200px;">{{ post.title }}</h6>
+                        <small class="text-muted">{{ post.views }} views</small>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Recent Activity & Quick Draft -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Recent Activity</h5>
+              </div>
+              <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" v-for="activity in recentActivity" :key="activity.id">
+                    <div class="d-flex">
+                      <div class="me-3">
+                        <div class="activity-icon" :class="'bg-' + activity.type">
+                          <i :class="'fas fa-' + activityIcon(activity.type)"></i>
+                        </div>
+                      </div>
+                      <div>
+                        <div v-html="activity.message"></div>
+                        <small class="text-muted">{{ formatDate(activity.date) }}</small>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Quick Draft</h5>
+              </div>
+              <div class="card-body">
+                <form @submit.prevent="saveQuickDraft">
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Post title" v-model="quickDraft.title">
+                  </div>
+                  <div class="mb-3">
+                    <textarea class="form-control" rows="4" placeholder="What's on your mind?" v-model="quickDraft.content"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Draft</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Comments Management -->
+      <div v-if="activePage === 'comments'" class="content-section">
+        <h2 class="mb-4">Comments Management</h2>
+        
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">All Comments</h5>
+            <div class="d-flex">
+              <div class="input-group me-2" style="width: 250px;">
+                <input type="text" class="form-control" placeholder="Search comments..." v-model="commentSearchQuery">
+                <button class="btn btn-outline-secondary" type="button">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+              <select class="form-select" v-model="commentStatusFilter">
+                <option value="all">All Status</option>
+                <option value="approved">Approved</option>
+                <option value="pending">Pending</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th style="width: 25%">Author</th>
+                    <th style="width: 40%">Comment</th>
+                    <th style="width: 15%">Post</th>
+                    <th style="width: 10%">Date</th>
+                    <th style="width: 10%">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="comment in filteredComments" :key="comment.id">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="commenter-avatar me-2">
+                          <div class="rounded-circle bg-primary text-white text-center" 
+                            style="width: 36px; height: 36px; line-height: 36px;">
+                            {{ comment.name.charAt(0).toUpperCase() }}
+                          </div>
+                        </div>
+                        <div>
+                          <div class="fw-medium">{{ comment.name }}</div>
+                          <small class="text-muted">{{ comment.email }}</small>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{{ comment.content }}</td>
+                    <td>
+                      <a href="#" @click.prevent="viewPost(comment.postId)">{{ comment.post }}</a>
+                    </td>
+                    <td>{{ formatDate(comment.date) }}</td>
+                    <td>
+                      <button v-if="!comment.approved" class="btn btn-sm btn-outline-success me-1" @click="approveComment(comment)">
+                        <i class="fas fa-check"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger" @click="confirmDeleteComment(comment)">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Posts Management -->
+      <div v-if="activePage === 'posts'" class="content-section">
+        <h2 class="mb-4">Manage Posts</h2>
+        
+        <!-- GitHub Connection Alert -->
+        <div v-if="!isGitHubConnected" class="alert alert-warning mb-4">
+          <h5 class="alert-heading"><i class="fab fa-github me-2"></i>GitHub Connection Required</h5>
+          <p>To manage posts and upload images, you need to connect to GitHub first. This will allow you to edit the actual content on your blog.</p>
+          <div class="d-flex">
+            <button class="btn btn-primary me-2" @click="connectToGitHub" :disabled="githubLoading">
+              <span v-if="githubLoading"><i class="fas fa-spinner fa-spin me-2"></i>Connecting...</span>
+              <span v-else><i class="fas fa-plug me-2"></i>Connect to GitHub</span>
+            </button>
+            <a href="netlify-cms.html" class="btn btn-outline-secondary">
+              <i class="fas fa-external-link-alt me-2"></i>Use Netlify CMS
+            </a>
+          </div>
+          <div v-if="githubError" class="text-danger mt-2">
+            <small><i class="fas fa-exclamation-circle me-1"></i>{{ githubError }}</small>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">All Posts</h5>
+            <div class="d-flex">
+              <div class="input-group me-2" style="width: 250px;">
+                <input type="text" class="form-control" placeholder="Search posts..." v-model="postSearchQuery">
+                <button class="btn btn-outline-secondary" type="button">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+              <select class="form-select me-2" v-model="postStatusFilter">
+                <option value="all">All Status</option>
+                <option value="published">Published</option>
+                <option value="draft">Draft</option>
+              </select>
+              <select class="form-select" v-model="postCategoryFilter">
+                <option value="all">All Categories</option>
+                <option v-for="category in categories" :value="category.name">{{ category.name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+              <button class="btn btn-primary" @click="createNewPost">
+                <i class="fas fa-plus-circle me-1"></i> New Post
+              </button>
+              <div class="pagination-info">
+                Showing {{ paginatedPosts.length }} of {{ filteredPosts.length }} posts
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th style="width: 40%">Title</th>
+                    <th style="width: 15%">Category</th>
+                    <th style="width: 10%">Date</th>
+                    <th style="width: 10%">Status</th>
+                    <th style="width: 15%">Views</th>
+                    <th style="width: 10%">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="post in paginatedPosts" :key="post.id">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <img v-if="post.image" :src="post.image" class="me-2" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">
+                        <div v-else class="post-placeholder me-2" style="width: 40px; height: 40px; background-color: #e9ecef; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                          <i class="fas fa-file-alt text-secondary"></i>
+                        </div>
+                        <div>
+                          <div class="fw-medium">{{ post.title }}</div>
+                          <small class="text-muted">{{ post.slug }}</small>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-secondary">{{ post.category || 'Uncategorized' }}</span>
+                    </td>
+                    <td>{{ formatDate(post.date) }}</td>
+                    <td>
+                      <span class="badge" :class="post.published ? 'bg-success' : 'bg-warning'">
+                        {{ post.published ? 'Published' : 'Draft' }}
+                      </span>
+                    </td>
+                    <td>
+                      <i class="fas fa-chart-line me-1 text-info"></i> {{ post.views }}
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="btn btn-sm btn-outline-primary" @click="editPost(post)" title="Edit">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary" @click="previewPost(post)" title="Preview">
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" @click="confirmDeletePost(post)" title="Delete">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- Pagination -->
+            <nav v-if="totalPages > 1" aria-label="Post pagination">
+              <ul class="pagination justify-content-center mt-4">
+                <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                  <a class="page-link" href="#" @click.prevent="currentPage = currentPage - 1">Previous</a>
+                </li>
+                <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
+                  <a class="page-link" href="#" @click.prevent="currentPage = page">{{ page }}</a>
+                </li>
+                <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                  <a class="page-link" href="#" @click.prevent="currentPage = currentPage + 1">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      
+      <!-- New/Edit Post -->
+      <div v-if="activePage === 'new-post'" class="content-section">
+        <h2 class="mb-4">{{ isEditingPost ? 'Edit Post' : 'Create New Post' }}</h2>
+        
+        <form @submit.prevent="savePost">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h5 class="mb-0">Post Content</h5>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="post-title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="post-title" v-model="currentPost.title" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="post-slug" class="form-label">Slug</label>
+                    <input type="text" class="form-control" id="post-slug" v-model="currentPost.slug" placeholder="auto-generated-from-title">
+                    <small class="form-text text-muted">Leave blank to auto-generate from title</small>
+                  </div>
+                  <div class="mb-3">
+                    <label for="post-excerpt" class="form-label">Excerpt</label>
+                    <textarea class="form-control" id="post-excerpt" rows="3" v-model="currentPost.excerpt"></textarea>
+                  </div>
+                  
+                  <!-- Markdown Editor -->
+                  <div class="mb-3">
+                    <label for="post-content" class="form-label">Content (Markdown)</label>
+                    <div class="editor-toolbar">
+                      <button type="button" class="btn btn-sm btn-outline-secondary me-1" 
+                        @click="insertMarkdown('# ', '', 'Heading 1')" title="Heading 1">
+                        <i class="fas fa-heading"></i>1
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary me-1" 
+                        @click="insertMarkdown('## ', '', 'Heading 2')" title="Heading 2">
+                        <i class="fas fa-heading"></i>2
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary me-1" 
+                        @click="insertMarkdown('**', '**', 'bold text')" title="Bold">
+                        <i class="fas fa-bold"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary me-1" 
+                        @click="insertMarkdown('*', '*', 'italic text')" title="Italic">
+                        <i class="fas fa-italic"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary me-1" 
+                        @click="insertMarkdown('[', '](https://example.com)', 'link text')" title="Link">
+                        <i class="fas fa-link"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary me-1" 
+                        @click="handleContentImageUpload" title="Upload & Insert Image">
+                        <i class="fas fa-upload"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary me-1" 
+                        @click="insertMarkdown('- ', '', 'List item')" title="Bullet List">
+                        <i class="fas fa-list-ul"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary me-1" 
+                        @click="insertMarkdown('1. ', '', 'List item')" title="Numbered List">
+                        <i class="fas fa-list-ol"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary me-1" 
+                        @click="insertMarkdown('```\n', '\n```', 'code')" title="Code Block">
+                        <i class="fas fa-code"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary" 
+                        @click="insertMarkdown('> ', '', 'blockquote')" title="Blockquote">
+                        <i class="fas fa-quote-right"></i>
+                      </button>
+                    </div>
+                    <textarea class="form-control" id="post-content" rows="12" v-model="currentPost.content" required></textarea>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- SEO Settings -->
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h5 class="mb-0">SEO Settings</h5>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="meta-title" class="form-label">Meta Title</label>
+                    <input type="text" class="form-control" id="meta-title" v-model="currentPost.metaTitle" placeholder="Leave blank to use post title">
+                  </div>
+                  <div class="mb-3">
+                    <label for="meta-description" class="form-label">Meta Description</label>
+                    <textarea class="form-control" id="meta-description" rows="3" v-model="currentPost.metaDescription" placeholder="Brief description for search engines"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              <!-- Publish Settings -->
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h5 class="mb-0">Publish</h5>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="post-date" class="form-label">Publish Date</label>
+                    <input type="date" class="form-control" id="post-date" v-model="currentPost.date">
+                  </div>
+                  <div class="mb-3">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="publish-status" v-model="currentPost.published">
+                      <label class="form-check-label" for="publish-status">
+                        {{ currentPost.published ? 'Published' : 'Draft' }}
+                      </label>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="featured-status" v-model="currentPost.featured">
+                      <label class="form-check-label" for="featured-status">
+                        Featured Post
+                      </label>
+                    </div>
+                  </div>
+                  <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                      {{ isEditingPost ? 'Update Post' : 'Publish Post' }}
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" @click="saveAsDraft">
+                      Save as Draft
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" @click="cancelEdit">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Categories & Tags -->
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h5 class="mb-0">Categories & Tags</h5>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="post-category" class="form-label">Category</label>
+                    <select class="form-select" id="post-category" v-model="currentPost.category">
+                      <option value="">Select Category</option>
+                      <option v-for="category in categories" :value="category.name">{{ category.name }}</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="post-tags" class="form-label">Tags</label>
+                    <input type="text" class="form-control" id="post-tags" v-model="currentPost.tags" placeholder="Comma separated tags">
+                    <small class="form-text text-muted">Separate tags with commas</small>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Featured Image -->
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h5 class="mb-0">Featured Image</h5>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <input type="text" class="form-control" id="post-image" v-model="currentPost.image" placeholder="Image URL">
+                  </div>
+                  <div v-if="currentPost.image" class="image-preview mb-3">
+                    <img :src="currentPost.image" class="img-fluid img-thumbnail" alt="Featured image preview">
+                  </div>
+                  <button type="button" class="btn btn-outline-secondary w-100" @click="handleImageUpload">
+                    <i class="fas fa-upload me-1"></i> Choose Image
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Preview -->
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Preview</h5>
+                </div>
+                <div class="card-body">
+                  <div class="content-preview" v-html="markdownPreview"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Settings -->
+      <div v-if="activePage === 'settings'" class="content-section">
+        <h2 class="mb-4">Site Settings</h2>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <!-- General Settings -->
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">General Settings</h5>
+              </div>
+              <div class="card-body">
+                <form @submit.prevent="saveGeneralSettings">
+                  <div class="mb-3">
+                    <label for="site-title" class="form-label">Site Title</label>
+                    <input type="text" class="form-control" id="site-title" v-model="siteSettings.title">
+                  </div>
+                  <div class="mb-3">
+                    <label for="site-description" class="form-label">Site Description</label>
+                    <textarea class="form-control" id="site-description" rows="3" v-model="siteSettings.description"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="site-logo" class="form-label">Site Logo URL</label>
+                    <input type="text" class="form-control" id="site-logo" v-model="siteSettings.logo">
+                  </div>
+                  <div class="mb-3">
+                    <label for="posts-per-page" class="form-label">Posts Per Page</label>
+                    <input type="number" class="form-control" id="posts-per-page" v-model="siteSettings.postsPerPage" min="1" max="20">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Settings</button>
+                </form>
+              </div>
+            </div>
+            
+            <!-- Social Media Settings -->
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Social Media</h5>
+              </div>
+              <div class="card-body">
+                <form @submit.prevent="saveSocialSettings">
+                  <div class="mb-3">
+                    <label for="twitter-url" class="form-label">Twitter URL</label>
+                    <input type="url" class="form-control" id="twitter-url" v-model="socialSettings.twitter">
+                  </div>
+                  <div class="mb-3">
+                    <label for="facebook-url" class="form-label">Facebook URL</label>
+                    <input type="url" class="form-control" id="facebook-url" v-model="socialSettings.facebook">
+                  </div>
+                  <div class="mb-3">
+                    <label for="instagram-url" class="form-label">Instagram URL</label>
+                    <input type="url" class="form-control" id="instagram-url" v-model="socialSettings.instagram">
+                  </div>
+                  <div class="mb-3">
+                    <label for="linkedin-url" class="form-label">LinkedIn URL</label>
+                    <input type="url" class="form-control" id="linkedin-url" v-model="socialSettings.linkedin">
+                  </div>
+                  <div class="mb-3">
+                    <label for="github-url" class="form-label">GitHub URL</label>
+                    <input type="url" class="form-control" id="github-url" v-model="socialSettings.github">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Social Links</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <!-- Comment Settings -->
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Comment Settings</h5>
+              </div>
+              <div class="card-body">
+                <form @submit.prevent="saveCommentSettings">
+                  <div class="mb-3">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="enable-comments" v-model="commentSettings.enabled">
+                      <label class="form-check-label" for="enable-comments">
+                        Enable Comments
+                      </label>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="moderate-comments" v-model="commentSettings.moderation">
+                      <label class="form-check-label" for="moderate-comments">
+                        Moderate Comments Before Publishing
+                      </label>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="disqus-shortname" class="form-label">Disqus Shortname</label>
+                    <input type="text" class="form-control" id="disqus-shortname" v-model="commentSettings.disqusShortname">
+                    <small class="form-text text-muted">Required if using Disqus for comments</small>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Comment Settings</button>
+                </form>
+              </div>
+            </div>
+            
+            <!-- Analytics Settings -->
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Analytics</h5>
+              </div>
+              <div class="card-body">
+                <form @submit.prevent="saveAnalyticsSettings">
+                  <div class="mb-3">
+                    <label for="ga-tracking-id" class="form-label">Google Analytics Tracking ID</label>
+                    <input type="text" class="form-control" id="ga-tracking-id" v-model="analyticsSettings.gaTrackingId" placeholder="UA-XXXXXXXXX-X or G-XXXXXXXXXX">
+                  </div>
+                  <div class="mb-3">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="enable-analytics" v-model="analyticsSettings.enabled">
+                      <label class="form-check-label" for="enable-analytics">
+                        Enable Google Analytics
+                      </label>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Analytics Settings</button>
+                </form>
+              </div>
+            </div>
+            
+            <!-- Backup & Reset -->
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Backup & Reset</h5>
+              </div>
+              <div class="card-body">
+                <div class="d-grid gap-2">
+                  <button type="button" class="btn btn-primary" @click="exportData">
+                    <i class="fas fa-download me-1"></i> Export Site Data
+                  </button>
+                  <button type="button" class="btn btn-warning" @click="importData">
+                    <i class="fas fa-upload me-1"></i> Import Site Data
+                  </button>
+                  <button type="button" class="btn btn-danger" @click="confirmReset">
+                    <i class="fas fa-exclamation-triangle me-1"></i> Reset to Default
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Profile Settings -->
+      <div v-if="activePage === 'profile'" class="content-section">
+        <h2 class="mb-4">Profile Settings</h2>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <!-- Profile Information -->
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Profile Information</h5>
+              </div>
+              <div class="card-body">
+                <form @submit.prevent="updateProfile">
+                  <div class="mb-3">
+                    <label for="profile-name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="profile-name" v-model="profileData.name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="profile-email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="profile-email" v-model="profileData.email" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="profile-bio" class="form-label">Bio</label>
+                    <textarea class="form-control" id="profile-bio" rows="4" v-model="profileData.bio"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Update Profile</button>
+                  <div v-if="profileSuccess" class="alert alert-success mt-3">{{ profileSuccess }}</div>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <!-- Change Password -->
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Change Password</h5>
+              </div>
+              <div class="card-body">
+                <form @submit.prevent="changePassword">
+                  <div class="mb-3">
+                    <label for="current-password" class="form-label">Current Password</label>
+                    <input type="password" class="form-control" id="current-password" v-model="passwordData.currentPassword" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="new-password" class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="new-password" v-model="passwordData.newPassword" required 
+                      minlength="8" title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters">
+                    <small class="form-text text-muted">
+                      Password must contain at least one number, one uppercase and lowercase letter, and at least 8 characters
+                    </small>
+                  </div>
+                  <div class="mb-3">
+                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm-password" v-model="passwordData.confirmPassword" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Change Password</button>
+                  <div v-if="passwordError" class="alert alert-danger mt-3">{{ passwordError }}</div>
+                  <div v-if="passwordSuccess" class="alert alert-success mt-3">{{ passwordSuccess }}</div>
+                </form>
+              </div>
+            </div>
+            
+            <!-- Notification Settings -->
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Notification Settings</h5>
+              </div>
+              <div class="card-body">
+                <form @submit.prevent="saveNotificationSettings">
+                  <div class="mb-3">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="email-comments" v-model="notificationSettings.comments">
+                      <label class="form-check-label" for="email-comments">
+                        Email me when new comments are posted
+                      </label>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="email-updates" v-model="notificationSettings.updates">
+                      <label class="form-check-label" for="email-updates">
+                        Email me about system updates
+                      </label>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Notification Settings</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Categories Management -->
+      <div v-if="activePage === 'categories'" class="content-section">
+        <h2 class="mb-4">Categories Management</h2>
+        
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">{{ editingCategory ? 'Edit Category' : 'Add New Category' }}</h5>
+              </div>
+              <div class="card-body">
+                <form @submit.prevent="saveCategory">
+                  <div class="mb-3">
+                    <label for="category-name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="category-name" v-model="currentCategory.name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="category-slug" class="form-label">Slug</label>
+                    <input type="text" class="form-control" id="category-slug" v-model="currentCategory.slug" required>
+                    <small class="form-text text-muted">
+                      The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.
+                    </small>
+                  </div>
+                  <div class="mb-3">
+                    <label for="category-description" class="form-label">Description</label>
+                    <textarea class="form-control" id="category-description" rows="3" v-model="currentCategory.description"></textarea>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" v-if="editingCategory" @click="cancelCategoryEdit">
+                      Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                      {{ editingCategory ? 'Update Category' : 'Add Category' }}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Categories List</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Slug</th>
+                        <th>Description</th>
+                        <th>Count</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="category in categories" :key="category.id">
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.slug || slugify(category.name) }}</td>
+                        <td>{{ category.description || 'No description' }}</td>
+                        <td>{{ category.count }}</td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-primary me-1" @click="editCategory(category)">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button class="btn btn-sm btn-outline-danger" @click="confirmDeleteCategory(category)">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- In the script section, add GitHub API integration after the existing script tags -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@4.0.0/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+  <!-- Add GitHub API integration -->
+  <script src="https://unpkg.com/js-base64@3.7.2/base64.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize marked for Markdown parsing
+      marked.setOptions({
+        breaks: true,
+        gfm: true
+      });
+
+      // GitHub Repository Information
+      const githubInfo = {
+        owner: 'venkatesh-shivandi',
+        repo: 'blog', 
+        branch: 'main',
+        postsDir: '_posts/',
+        imagesDir: 'assets/images/uploads/',
+        token: '' // Will be set after login through Netlify Identity or OAuth
+      };
+      
+      // Function to format date for Jekyll post filenames
+      function formatDateForJekyll(date) {
+        const d = new Date(date);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+      
+      // Function to create Jekyll front matter
+      function createFrontMatter(postData) {
+        let frontMatter = '---\n';
+        frontMatter += `layout: post\n`;
+        frontMatter += `title: "${postData.title}"\n`;
+        frontMatter += `date: ${postData.date}\n`;
+        
+        if (postData.category) {
+          frontMatter += `categories: [${postData.category}]\n`;
+        }
+        
+        if (postData.tags) {
+          const tagsArray = postData.tags.split(',').map(tag => tag.trim());
+          frontMatter += `tags: [${tagsArray.join(', ')}]\n`;
+        }
+        
+        if (postData.image) {
+          frontMatter += `image: ${postData.image}\n`;
+        }
+        
+        if (postData.excerpt) {
+          frontMatter += `excerpt: "${postData.excerpt}"\n`;
+        }
+        
+        if (postData.metaTitle || postData.metaDescription) {
+          frontMatter += 'seo:\n';
+          if (postData.metaTitle) {
+            frontMatter += `  title: "${postData.metaTitle}"\n`;
+          }
+          if (postData.metaDescription) {
+            frontMatter += `  description: "${postData.metaDescription}"\n`;
+          }
+        }
+        
+        frontMatter += `author: "Venkatesh Shivandi"\n`;
+        frontMatter += `featured: ${postData.featured}\n`;
+        frontMatter += '---\n\n';
+        
+        return frontMatter;
+      }
+      
+      // GitHub API helper functions
+      const githubApi = {
+        // Get authentication token from Netlify Identity or sessionStorage
+        getToken() {
+          return sessionStorage.getItem('githubToken') || '';
+        },
+        
+        // Set authentication token
+        setToken(token) {
+          sessionStorage.setItem('githubToken', token);
+          githubInfo.token = token;
+        },
+        
+        // Make authenticated request to GitHub API
+        async request(endpoint, method = 'GET', data = null) {
+          const token = this.getToken();
+          const url = `https://api.github.com/${endpoint}`;
+          
+          const headers = {
+            'Accept': 'application/vnd.github.v3+json'
+          };
+          
+          if (token) {
+            headers['Authorization'] = `token ${token}`;
+          }
+          
+          const options = {
+            method,
+            headers
+          };
+          
+          if (data) {
+            options.body = JSON.stringify(data);
+          }
+          
+          try {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+              const error = await response.json();
+              throw new Error(`GitHub API error: ${error.message || response.statusText}`);
+            }
+            
+            // Some endpoints return no content
+            if (response.status === 204) {
+              return null;
+            }
+            
+            return await response.json();
+          } catch (error) {
+            console.error('GitHub API request failed:', error);
+            throw error;
+          }
+        },
+        
+        // Get repository contents
+        async getContents(path) {
+          return this.request(`repos/${githubInfo.owner}/${githubInfo.repo}/contents/${path}?ref=${githubInfo.branch}`);
+        },
+        
+        // Get a file
+        async getFile(path) {
+          const content = await this.getContents(path);
+          return {
+            content: Base64.decode(content.content),
+            sha: content.sha
+          };
+        },
+        
+        // Create or update a file
+        async putFile(path, content, message, sha = null) {
+          const endpoint = `repos/${githubInfo.owner}/${githubInfo.repo}/contents/${path}`;
+          const data = {
+            message,
+            content: Base64.encode(content),
+            branch: githubInfo.branch
+          };
+          
+          if (sha) {
+            data.sha = sha;
+          }
+          
+          return this.request(endpoint, 'PUT', data);
+        },
+        
+        // Delete a file
+        async deleteFile(path, message, sha) {
+          const endpoint = `repos/${githubInfo.owner}/${githubInfo.repo}/contents/${path}`;
+          const data = {
+            message,
+            sha,
+            branch: githubInfo.branch
+          };
+          
+          return this.request(endpoint, 'DELETE', data);
+        },
+        
+        // List all posts
+        async listPosts() {
+          try {
+            const contents = await this.getContents(githubInfo.postsDir);
+            return contents
+              .filter(item => item.type === 'file' && item.name.endsWith('.md'))
+              .map(item => ({
+                path: item.path,
+                name: item.name,
+                sha: item.sha,
+                download_url: item.download_url
+              }));
+          } catch (error) {
+            console.error('Failed to list posts:', error);
+            return [];
+          }
+        },
+        
+        // Upload an image
+        async uploadImage(file, filename) {
+          try {
+            // Read file as base64
+            return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = async (e) => {
+                try {
+                  // Extract base64 data
+                  const base64Data = e.target.result.split(',')[1];
+                  
+                  // Create file path
+                  const path = `${githubInfo.imagesDir}${filename}`;
+                  
+                  // Upload to GitHub
+                  const result = await this.putFile(
+                    path,
+                    Base64.decode(base64Data),
+                    `Upload image: ${filename}`
+                  );
+                  
+                  // Return the URL to the uploaded image
+                  resolve(`/${path}`);
+                } catch (error) {
+                  reject(error);
+                }
+              };
+              reader.onerror = reject;
+              reader.readAsDataURL(file);
+            });
+          } catch (error) {
+            console.error('Failed to upload image:', error);
+            throw error;
+          }
+        }
+      };
+    
+      new Vue({
+        el: '#admin-dashboard',
+        data: {
+          activePage: 'dashboard',
+          
+          // Authentication
+          adminConfig: {
+            email: 'rajuvenkatesh188@gmail.com',
+            passwordHash: '$2a$10$8HgJfBF2t.vvYONHOF1hC.dBQ7oJVsfhAj9s2B2O0F1.Q7c.h4T9W',
+            firstLogin: false
+          },
+          
+          // Password Change
+          passwordData: {
+            currentPassword: '',
+            newPassword: '',
+            confirmPassword: ''
+          },
+          passwordError: '',
+          passwordSuccess: '',
+          
+          // Profile
+          profileData: {
+            name: 'Venkatesh Shivandi',
+            email: 'rajuvenkatesh188@gmail.com',
+            bio: 'Personal blog sharing insights on AI & ML, prompts, and tech innovations.'
+          },
+          profileSuccess: '',
+          
+          // Content Management
+          posts: [
+            { 
+              id: 1, 
+              title: 'Getting Started with AI Prompts', 
+              slug: 'getting-started-with-ai-prompts',
+              date: '2023-10-15', 
+              dateFormatted: '2023-10-15',
+              category: 'AI', 
+              tags: 'ai, prompts, chatgpt',
+              image: '../assets/images/demo/post1.jpg',
+              excerpt: 'Learn how to craft effective AI prompts for better results.',
+              content: '# Getting Started with AI Prompts\n\nIn this post, we\'ll explore how to write effective prompts for AI systems like ChatGPT.\n\n## Why Prompts Matter\n\nThe quality of your prompt directly affects the quality of the response...',
+              metaTitle: '',
+              metaDescription: '',
+              published: true,
+              featured: true,
+              views: 340
+            },
+            { 
+              id: 2, 
+              title: 'The Future of Machine Learning', 
+              slug: 'future-of-machine-learning',
+              date: '2023-10-10', 
+              dateFormatted: '2023-10-10',
+              category: 'ML', 
+              tags: 'machine learning, future tech, ai',
+              image: '../assets/images/demo/post2.jpg',
+              excerpt: 'Exploring the upcoming trends in machine learning technology.',
+              content: '# The Future of Machine Learning\n\nAs we look toward the future, several key trends are emerging in the field of machine learning...\n\n## Multimodal Models\n\nThe next generation of ML models will work across text, images, and audio simultaneously...',
+              metaTitle: 'The Future of Machine Learning: Trends and Predictions',
+              metaDescription: 'Discover the emerging trends that will shape the future of machine learning technology in the coming years.',
+              published: true,
+              featured: false,
+              views: 287
+            },
+            { 
+              id: 3, 
+              title: 'Productivity Tips for Developers', 
+              slug: 'productivity-tips-developers',
+              date: '2023-10-05', 
+              dateFormatted: '2023-10-05',
+              category: 'Productivity', 
+              tags: 'productivity, development, tips',
+              image: '',
+              excerpt: 'Boost your productivity with these developer-focused tips and tools.',
+              content: '# Productivity Tips for Developers\n\nAs developers, we\'re constantly looking for ways to work more efficiently...\n\n## Keyboard Shortcuts\n\nMastering keyboard shortcuts in your IDE can save hours of time...',
+              metaTitle: '',
+              metaDescription: '',
+              published: true,
+              featured: false,
+              views: 215
+            },
+            { 
+              id: 4, 
+              title: 'Introduction to Neural Networks', 
+              slug: 'introduction-neural-networks',
+              date: '2023-09-28', 
+              dateFormatted: '2023-09-28',
+              category: 'AI', 
+              tags: 'neural networks, deep learning, ai',
+              image: '../assets/images/demo/post3.jpg',
+              excerpt: 'A beginner-friendly introduction to neural networks and how they work.',
+              content: '# Introduction to Neural Networks\n\nNeural networks are the backbone of modern AI systems...\n\n## What is a Neural Network?\n\nAt its simplest, a neural network is a collection of algorithms designed to recognize patterns...',
+              metaTitle: '',
+              metaDescription: '',
+              published: true,
+              featured: false,
+              views: 198
+            }
+          ],
+          postSearchQuery: '',
+          postStatusFilter: 'all',
+          postCategoryFilter: 'all',
+          currentPage: 1,
+          postsPerPage: 10,
+          
+          comments: [
+            { id: 1, postId: 1, post: 'Getting Started with AI Prompts', name: 'John Doe', email: 'john@example.com', content: 'Great article! I\'ve been struggling with prompt engineering for a while.', date: '2023-10-16', approved: true },
+            { id: 2, postId: 2, post: 'The Future of Machine Learning', name: 'Jane Smith', email: 'jane@example.com', content: 'Very insightful, thanks! The section on multimodal models was particularly interesting.', date: '2023-10-11', approved: true },
+            { id: 3, postId: 3, post: 'Productivity Tips for Developers', name: 'Alex Johnson', email: 'alex@example.com', content: 'I tried these tips and they worked great. I especially like the keyboard shortcuts section.', date: '2023-10-06', approved: false },
+            { id: 4, postId: 1, post: 'Getting Started with AI Prompts', name: 'Sarah Williams', email: 'sarah@example.com', content: 'Would love to see a follow-up article on advanced prompt techniques!', date: '2023-10-18', approved: true },
+            { id: 5, postId: 4, post: 'Introduction to Neural Networks', name: 'Michael Chen', email: 'michael@example.com', content: 'This was exactly what I needed as a beginner to understand the basics. Thanks!', date: '2023-09-30', approved: true }
+          ],
+          commentSearchQuery: '',
+          commentStatusFilter: 'all',
+          
+          categories: [
+            { id: 1, name: 'AI', slug: 'ai', description: 'Artificial Intelligence topics', count: 2 },
+            { id: 2, name: 'ML', slug: 'ml', description: 'Machine Learning tutorials and insights', count: 1 },
+            { id: 3, name: 'Productivity', slug: 'productivity', description: 'Tips and tools for better productivity', count: 1 },
+            { id: 4, name: 'Web Development', slug: 'web-development', description: 'Web development resources and guides', count: 0 },
+            { id: 5, name: 'Self Improvement', slug: 'self-improvement', description: 'Personal growth and self-improvement', count: 0 }
+          ],
+          currentCategory: {
+            id: null,
+            name: '',
+            slug: '',
+            description: '',
+            count: 0
+          },
+          editingCategory: false,
+          
+          // Post Editor
+          currentPost: {
+            id: null,
+            title: '',
+            slug: '',
+            date: '',
+            dateFormatted: '',
+            category: '',
+            tags: '',
+            image: '',
+            excerpt: '',
+            content: '',
+            metaTitle: '',
+            metaDescription: '',
+            published: true,
+            featured: false,
+            views: 0
+          },
+          isEditingPost: false,
+          
+          // Quick Draft
+          quickDraft: {
+            title: '',
+            content: ''
+          },
+          
+          // Stats & Analytics
+          trafficPeriod: '7',
+          pageViews: 1240,
+          pageViewGrowth: 12,
+          postGrowth: 15,
+          commentGrowth: 8,
+          subscriberCount: 142,
+          subscriberGrowth: 5,
+          
+          // Activity
+          recentActivity: [
+            { id: 1, type: 'primary', message: 'New post <strong>Getting Started with AI Prompts</strong> was published', date: '2023-10-15' },
+            { id: 2, type: 'success', message: 'New comment on <strong>The Future of Machine Learning</strong>', date: '2023-10-11' },
+            { id: 3, type: 'warning', message: 'Category <strong>Web Development</strong> was created', date: '2023-10-08' },
+            { id: 4, type: 'danger', message: 'Post <strong>Understanding Transformers</strong> was deleted', date: '2023-10-02' },
+            { id: 5, type: 'info', message: 'Site settings were updated', date: '2023-09-25' }
+          ],
+          
+          // Site Settings
+          siteSettings: {
+            title: 'Venkatesh Shivandi',
+            description: 'Personal blog sharing insights on AI & ML, prompts, and tech innovations.',
+            logo: '../assets/images/logo.png',
+            postsPerPage: 10
+          },
+          
+          // Social Media Settings
+          socialSettings: {
+            twitter: 'https://twitter.com/',
+            facebook: 'https://facebook.com/',
+            instagram: 'https://instagram.com/',
+            linkedin: 'https://linkedin.com/',
+            github: 'https://github.com/'
+          },
+          
+          // Comment Settings
+          commentSettings: {
+            enabled: true,
+            moderation: true,
+            disqusShortname: 'venkatesh-shivandi'
+          },
+          
+          // Analytics Settings
+          analyticsSettings: {
+            enabled: true,
+            gaTrackingId: 'UA-XXXXXXXX-X'
+          },
+          
+          // Notification Settings
+          notificationSettings: {
+            comments: true,
+            updates: true
+          },
+          
+          // GitHub Integration
+          isGitHubConnected: false,
+          githubLoading: false,
+          githubError: null,
+          allJekyllPosts: []
+        },
+        computed: {
+          // Dashboard
+          topPosts() {
+            return [...this.posts]
+              .sort((a, b) => b.views - a.views)
+              .slice(0, 5);
+          },
+          recentPosts() {
+            return this.posts.slice(0, 5);
+          },
+          recentComments() {
+            return this.comments.slice(0, 5);
+          },
+          
+          // Posts
+          filteredPosts() {
+            let filtered = [...this.posts];
+            
+            // Search filter
+            if (this.postSearchQuery) {
+              const query = this.postSearchQuery.toLowerCase();
+              filtered = filtered.filter(post => 
+                post.title.toLowerCase().includes(query) || 
+                post.content.toLowerCase().includes(query) ||
+                post.excerpt.toLowerCase().includes(query)
+              );
+            }
+            
+            // Status filter
+            if (this.postStatusFilter === 'published') {
+              filtered = filtered.filter(post => post.published);
+            } else if (this.postStatusFilter === 'draft') {
+              filtered = filtered.filter(post => !post.published);
+            }
+            
+            // Category filter
+            if (this.postCategoryFilter !== 'all') {
+              filtered = filtered.filter(post => post.category === this.postCategoryFilter);
+            }
+            
+            return filtered;
+          },
+          totalPages() {
+            return Math.ceil(this.filteredPosts.length / this.postsPerPage);
+          },
+          paginatedPosts() {
+            const start = (this.currentPage - 1) * this.postsPerPage;
+            const end = start + this.postsPerPage;
+            return this.filteredPosts.slice(start, end);
+          },
+          
+          // Comments
+          filteredComments() {
+            let filtered = [...this.comments];
+            
+            // Search filter
+            if (this.commentSearchQuery) {
+              const query = this.commentSearchQuery.toLowerCase();
+              filtered = filtered.filter(comment => 
+                comment.name.toLowerCase().includes(query) || 
+                comment.content.toLowerCase().includes(query) ||
+                comment.email.toLowerCase().includes(query)
+              );
+            }
+            
+            // Status filter
+            if (this.commentStatusFilter === 'approved') {
+              filtered = filtered.filter(comment => comment.approved);
+            } else if (this.commentStatusFilter === 'pending') {
+              filtered = filtered.filter(comment => !comment.approved);
+            }
+            
+            return filtered;
+          },
+          
+          // Markdown Preview
+          markdownPreview() {
+            return this.currentPost.content ? marked.parse(this.currentPost.content) : '';
+          }
+        },
+        methods: {
+          // Auth & Profile
+          logout() {
+            localStorage.removeItem('adminLoggedIn');
+            window.location.href = '/admin/';
+          },
+          
+          changePassword() {
+            this.passwordError = '';
+            this.passwordSuccess = '';
+            
+            // Validate password match
+            if (this.passwordData.newPassword !== this.passwordData.confirmPassword) {
+              this.passwordError = 'New passwords do not match';
+              return;
+            }
+            
+            // Validate current password
+            if (!bcrypt.compareSync(this.passwordData.currentPassword, this.adminConfig.passwordHash)) {
+              this.passwordError = 'Current password is incorrect';
+              return;
+            }
+            
+            // Password requirements check
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+            if (!passwordRegex.test(this.passwordData.newPassword)) {
+              this.passwordError = 'Password must contain at least one number, one uppercase and lowercase letter, and at least 8 characters';
+              return;
+            }
+            
+            // Update password hash
+            this.adminConfig.passwordHash = bcrypt.hashSync(this.passwordData.newPassword, 10);
+            
+            // Store in localStorage
+            localStorage.setItem('adminPasswordHash', this.adminConfig.passwordHash);
+            
+            // Reset form and show success
+            this.passwordData.currentPassword = '';
+            this.passwordData.newPassword = '';
+            this.passwordData.confirmPassword = '';
+            this.passwordSuccess = 'Password updated successfully!';
+          },
+          
+          updateProfile() {
+            // In a real app, this would save to a database or API
+            this.profileSuccess = 'Profile updated successfully!';
+            
+            // Store updated profile
+            localStorage.setItem('profileName', this.profileData.name);
+            localStorage.setItem('profileEmail', this.profileData.email);
+            localStorage.setItem('profileBio', this.profileData.bio);
+          },
+          
+          // Post Management
+          async createNewPost() {
+            // First check if GitHub is connected
+            if (!this.isGitHubConnected) {
+              await this.connectToGitHub();
+              if (!this.isGitHubConnected) {
+                alert('Please connect to GitHub first');
+                return;
+              }
+            }
+            
+            this.currentPost = {
+              id: null,
+              title: '',
+              slug: '',
+              date: new Date().toISOString().split('T')[0],
+              dateFormatted: new Date().toISOString().split('T')[0],
+              category: '',
+              tags: '',
+              image: '',
+              excerpt: '',
+              content: '',
+              metaTitle: '',
+              metaDescription: '',
+              published: false,
+              featured: false,
+              views: 0
+            };
+            this.isEditingPost = false;
+            this.activePage = 'new-post';
+          },
+          
+          async editPost(post) {
+            // First check if GitHub is connected
+            if (!this.isGitHubConnected) {
+              await this.connectToGitHub();
+              if (!this.isGitHubConnected) {
+                alert('Please connect to GitHub first');
+                return;
+              }
+            }
+            
+            this.currentPost = { ...post };
+            this.isEditingPost = true;
+            this.activePage = 'new-post';
+          },
+          
+          savePost() {
+            if (!this.currentPost.title) {
+              alert('Post title is required!');
+              return;
+            }
+            
+            try {
+              // Generate slug if empty
+              if (!this.currentPost.slug) {
+                this.currentPost.slug = this.slugify(this.currentPost.title);
+              }
+              
+              // Set current date if empty
+              if (!this.currentPost.date) {
+                this.currentPost.date = new Date().toISOString().split('T')[0];
+                this.currentPost.dateFormatted = this.currentPost.date;
+              }
+              
+              // Create post content with front matter
+              const frontMatter = createFrontMatter(this.currentPost);
+              const postContent = frontMatter + this.currentPost.content;
+              
+              // Generate filename
+              const datePrefix = formatDateForJekyll(this.currentPost.date);
+              const filename = `${datePrefix}-${this.currentPost.slug}.md`;
+              const path = `${githubInfo.postsDir}${filename}`;
+              
+              let message;
+              let result;
+              
+              if (this.isEditingPost) {
+                // Update existing post
+                message = `Update post: ${this.currentPost.title}`;
+                result = await githubApi.putFile(path, postContent, message, this.currentPost.sha);
+              } else {
+                // Create new post
+                message = `Create post: ${this.currentPost.title}`;
+                result = await githubApi.putFile(path, postContent, message);
+              }
+              
+              // Update local posts list
+              await this.loadJekyllPosts();
+              
+              // Add activity
+              this.addActivity(
+                this.isEditingPost ? 'info' : 'primary',
+                this.isEditingPost ?
+                  `Post <strong>${this.currentPost.title}</strong> was updated` :
+                  `New post <strong>${this.currentPost.title}</strong> was ${this.currentPost.published ? 'published' : 'saved as draft'}`
+              );
+              
+              alert(this.isEditingPost ? 'Post updated successfully!' : 'Post created successfully!');
+              
+              // Reset form and go back to posts view
+              this.resetCurrentPost();
+              this.activePage = 'posts';
+            } catch (error) {
+              console.error('Failed to save post:', error);
+              alert(`Error saving post: ${error.message || 'Unknown error'}`);
+            }
+          },
+          
+          saveAsDraft() {
+            this.currentPost.published = false;
+            this.savePost();
+          },
+          
+          cancelEdit() {
+            if (confirm('Are you sure you want to cancel? Any unsaved changes will be lost.')) {
+              this.resetCurrentPost();
+              this.activePage = 'posts';
+            }
+          },
+          
+          resetCurrentPost() {
+            this.currentPost = {
+              id: null,
+              title: '',
+              slug: '',
+              date: '',
+              dateFormatted: '',
+              category: '',
+              tags: '',
+              image: '',
+              excerpt: '',
+              content: '',
+              metaTitle: '',
+              metaDescription: '',
+              published: true,
+              featured: false,
+              views: 0
+            };
+            this.isEditingPost = false;
+          },
+          
+          async confirmDeletePost(post) {
+            if (!this.isGitHubConnected) {
+              await this.connectToGitHub();
+              if (!this.isGitHubConnected) {
+                alert('Please connect to GitHub first');
+                return;
+              }
+            }
+            
+            if (confirm(`Are you sure you want to delete the post: "${post.title}"? This action cannot be undone.`)) {
+              try {
+                // Delete post file
+                await githubApi.deleteFile(
+                  post.path,
+                  `Delete post: ${post.title}`,
+                  post.sha
+                );
+                
+                // Update local posts list
+                await this.loadJekyllPosts();
+                
+                // Add activity
+                this.addActivity('danger', `Post <strong>${post.title}</strong> was deleted`);
+                
+                alert('Post deleted successfully!');
+              } catch (error) {
+                console.error('Failed to delete post:', error);
+                alert(`Error deleting post: ${error.message || 'Unknown error'}`);
+              }
+            }
+          },
+          
+          previewPost(post) {
+            // In a real implementation, this would open the post in a new tab
+            alert(`Preview for: ${post.title}\n\nIn a real implementation, this would open the post in a preview mode.`);
+          },
+          
+          // Comment Management
+          approveComment(comment) {
+            const index = this.comments.findIndex(c => c.id === comment.id);
+            if (index !== -1) {
+              this.comments[index].approved = true;
+              localStorage.setItem('comments', JSON.stringify(this.comments));
+              
+              // Add activity
+              this.addActivity('success', `Comment from <strong>${comment.name}</strong> was approved`);
+              
+              alert('Comment approved!');
+            }
+          },
+          
+          confirmDeleteComment(comment) {
+            if (confirm('Are you sure you want to delete this comment?')) {
+              this.comments = this.comments.filter(c => c.id !== comment.id);
+              localStorage.setItem('comments', JSON.stringify(this.comments));
+              
+              // Add activity
+              this.addActivity('danger', `Comment from <strong>${comment.name}</strong> was deleted`);
+              
+              alert('Comment deleted successfully!');
+            }
+          },
+          
+          viewPost(postId) {
+            const post = this.posts.find(p => p.id === postId);
+            if (post) {
+              this.editPost(post);
+            }
+          },
+          
+          // Category Management
+          editCategory(category) {
+            this.currentCategory = { ...category };
+            this.editingCategory = true;
+          },
+          
+          saveCategory() {
+            if (!this.currentCategory.name) {
+              alert('Category name is required!');
+              return;
+            }
+            
+            // Generate slug if empty
+            if (!this.currentCategory.slug) {
+              this.currentCategory.slug = this.slugify(this.currentCategory.name);
+            }
+            
+            if (this.editingCategory) {
+              // Update existing category
+              const index = this.categories.findIndex(c => c.id === this.currentCategory.id);
+              if (index !== -1) {
+                this.categories[index] = { ...this.currentCategory };
+                alert('Category updated successfully!');
+              }
+            } else {
+              // Add new category with next available ID
+              const maxId = Math.max(...this.categories.map(c => c.id), 0);
+              this.currentCategory.id = maxId + 1;
+              this.currentCategory.count = 0;
+              this.categories.push({ ...this.currentCategory });
+              
+              // Add activity
+              this.addActivity('warning', `Category <strong>${this.currentCategory.name}</strong> was created`);
+              
+              alert('Category created successfully!');
+            }
+            
+            // Save categories to localStorage
+            localStorage.setItem('categories', JSON.stringify(this.categories));
+            
+            // Reset form
+            this.resetCurrentCategory();
+          },
+          
+          cancelCategoryEdit() {
+            this.resetCurrentCategory();
+          },
+          
+          resetCurrentCategory() {
+            this.currentCategory = {
+              id: null,
+              name: '',
+              slug: '',
+              description: '',
+              count: 0
+            };
+            this.editingCategory = false;
+          },
+          
+          confirmDeleteCategory(category) {
+            // Check if category is in use
+            if (category.count > 0) {
+              alert(`Cannot delete category "${category.name}" because it is used by ${category.count} posts.`);
+              return;
+            }
+            
+            if (confirm(`Are you sure you want to delete the category: "${category.name}"?`)) {
+              this.categories = this.categories.filter(c => c.id !== category.id);
+              localStorage.setItem('categories', JSON.stringify(this.categories));
+              
+              // Add activity
+              this.addActivity('danger', `Category <strong>${category.name}</strong> was deleted`);
+              
+              alert('Category deleted successfully!');
+            }
+          },
+          
+          // Quick Draft
+          saveQuickDraft() {
+            if (!this.quickDraft.title) {
+              alert('Please enter a title for your draft.');
+              return;
+            }
+            
+            const newPost = {
+              id: Math.max(...this.posts.map(p => p.id), 0) + 1,
+              title: this.quickDraft.title,
+              slug: this.slugify(this.quickDraft.title),
+              date: new Date().toISOString().split('T')[0],
+              dateFormatted: new Date().toISOString().split('T')[0],
+              category: 'Uncategorized',
+              tags: '',
+              image: '',
+              excerpt: '',
+              content: this.quickDraft.content,
+              metaTitle: '',
+              metaDescription: '',
+              published: false,
+              featured: false,
+              views: 0
+            };
+            
+            this.posts.push(newPost);
+            localStorage.setItem('posts', JSON.stringify(this.posts));
+            
+            // Add activity
+            this.addActivity('primary', `Quick draft <strong>${newPost.title}</strong> was created`);
+            
+            // Reset quick draft form
+            this.quickDraft.title = '';
+            this.quickDraft.content = '';
+            
+            alert('Draft saved successfully!');
+          },
+          
+          // Markdown Editor
+          insertMarkdown(prefix, suffix, placeholder) {
+            const textarea = document.getElementById('post-content');
+            if (!textarea) return;
+            
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = this.currentPost.content.substring(start, end);
+            const replacement = selectedText || placeholder;
+            const newText = 
+              this.currentPost.content.substring(0, start) + 
+              prefix + replacement + suffix + 
+              this.currentPost.content.substring(end);
+            
+            this.currentPost.content = newText;
+            
+            // Set focus back to textarea and adjust selection
+            this.$nextTick(() => {
+              textarea.focus();
+              const newCursorPos = start + prefix.length + replacement.length;
+              textarea.setSelectionRange(newCursorPos, newCursorPos);
+            });
+          },
+          
+          // Charts & Stats
+          initTrafficChart() {
+            const ctx = document.getElementById('trafficChart');
+            if (!ctx) return;
+            
+            // Sample data for the chart
+            const labels = this.trafficPeriod === '7' 
+              ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] 
+              : Array.from({length: parseInt(this.trafficPeriod)}, (_, i) => `Day ${i+1}`);
+            
+            const generateRandomData = (min, max, length) => {
+              return Array.from({length}, () => Math.floor(Math.random() * (max - min + 1)) + min);
+            };
+            
+            const visitorsData = generateRandomData(50, 200, labels.length);
+            const pageviewsData = generateRandomData(100, 300, labels.length);
+            
+            if (this.trafficChart) {
+              this.trafficChart.destroy();
+            }
+            
+            this.trafficChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: 'Visitors',
+                    data: visitorsData,
+                    borderColor: '#3742fa',
+                    backgroundColor: 'rgba(55, 66, 250, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                  },
+                  {
+                    label: 'Pageviews',
+                    data: pageviewsData,
+                    borderColor: '#5352ed',
+                    backgroundColor: 'rgba(83, 82, 237, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                  }
+                ]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    position: 'top',
+                  }
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          },
+          
+          // Utility Methods
+          formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'short', 
+              day: 'numeric' 
+            });
+          },
+          
+          slugify(text) {
+            return text.toString().toLowerCase()
+              .replace(/\s+/g, '-')           // Replace spaces with -
+              .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+              .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+              .replace(/^-+/, '')             // Trim - from start of text
+              .replace(/-+$/, '');            // Trim - from end of text
+          },
+          
+          activityIcon(type) {
+            const icons = {
+              primary: 'file-alt',
+              success: 'comment',
+              warning: 'tag',
+              danger: 'trash',
+              info: 'info-circle'
+            };
+            return icons[type] || 'circle';
+          },
+          
+          addActivity(type, message) {
+            const newActivity = {
+              id: Math.max(...this.recentActivity.map(a => a.id), 0) + 1,
+              type: type,
+              message: message,
+              date: new Date().toISOString().split('T')[0]
+            };
+            
+            this.recentActivity.unshift(newActivity);
+            
+            // Keep only the 10 most recent activities
+            if (this.recentActivity.length > 10) {
+              this.recentActivity = this.recentActivity.slice(0, 10);
+            }
+            
+            localStorage.setItem('recentActivity', JSON.stringify(this.recentActivity));
+          },
+          
+          // Settings Management
+          saveGeneralSettings() {
+            // In a real application, this would save to Jekyll's _config.yml
+            alert('General settings saved successfully!');
+            localStorage.setItem('siteSettings', JSON.stringify(this.siteSettings));
+          },
+          
+          saveSocialSettings() {
+            alert('Social media settings saved successfully!');
+            localStorage.setItem('socialSettings', JSON.stringify(this.socialSettings));
+          },
+          
+          saveCommentSettings() {
+            alert('Comment settings saved successfully!');
+            localStorage.setItem('commentSettings', JSON.stringify(this.commentSettings));
+          },
+          
+          saveAnalyticsSettings() {
+            alert('Analytics settings saved successfully!');
+            localStorage.setItem('analyticsSettings', JSON.stringify(this.analyticsSettings));
+          },
+          
+          saveNotificationSettings() {
+            alert('Notification settings saved successfully!');
+            localStorage.setItem('notificationSettings', JSON.stringify(this.notificationSettings));
+          },
+          
+          exportData() {
+            // Create an object with all site data
+            const siteData = {
+              posts: this.posts,
+              comments: this.comments,
+              categories: this.categories,
+              siteSettings: this.siteSettings,
+              socialSettings: this.socialSettings,
+              commentSettings: this.commentSettings,
+              analyticsSettings: this.analyticsSettings
+            };
+            
+            // Convert to JSON and create download link
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(siteData, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "site-data-backup.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+          },
+          
+          importData() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '.json';
+            
+            fileInput.onchange = (e) => {
+              const file = e.target.files[0];
+              if (!file) return;
+              
+              const reader = new FileReader();
+              reader.onload = (event) => {
+                try {
+                  const importedData = JSON.parse(event.target.result);
+                  
+                  // Validate data structure
+                  if (!importedData.posts || !importedData.categories) {
+                    throw new Error('Invalid data structure');
+                  }
+                  
+                  // Import data
+                  this.posts = importedData.posts;
+                  this.comments = importedData.comments;
+                  this.categories = importedData.categories;
+                  
+                  // Import settings if available
+                  if (importedData.siteSettings) this.siteSettings = importedData.siteSettings;
+                  if (importedData.socialSettings) this.socialSettings = importedData.socialSettings;
+                  if (importedData.commentSettings) this.commentSettings = importedData.commentSettings;
+                  if (importedData.analyticsSettings) this.analyticsSettings = importedData.analyticsSettings;
+                  
+                  // Save to localStorage
+                  localStorage.setItem('posts', JSON.stringify(this.posts));
+                  localStorage.setItem('comments', JSON.stringify(this.comments));
+                  localStorage.setItem('categories', JSON.stringify(this.categories));
+                  localStorage.setItem('siteSettings', JSON.stringify(this.siteSettings));
+                  localStorage.setItem('socialSettings', JSON.stringify(this.socialSettings));
+                  localStorage.setItem('commentSettings', JSON.stringify(this.commentSettings));
+                  localStorage.setItem('analyticsSettings', JSON.stringify(this.analyticsSettings));
+                  
+                  alert('Data imported successfully!');
+                  
+                  // Add activity
+                  this.addActivity('info', 'Site data was imported');
+                  
+                } catch (error) {
+                  alert('Error importing data: ' + error.message);
+                }
+              };
+              reader.readAsText(file);
+            };
+            
+            fileInput.click();
+          },
+          
+          confirmReset() {
+            if (confirm('Are you sure you want to reset all data to default? This cannot be undone!')) {
+              // Clear localStorage
+              localStorage.removeItem('posts');
+              localStorage.removeItem('comments');
+              localStorage.removeItem('categories');
+              localStorage.removeItem('siteSettings');
+              localStorage.removeItem('socialSettings');
+              localStorage.removeItem('commentSettings');
+              localStorage.removeItem('analyticsSettings');
+              localStorage.removeItem('recentActivity');
+              
+              // Reset data (keep only admin login)
+              alert('All data has been reset to default. The page will reload.');
+              window.location.reload();
+            }
+          },
+          
+          // Post Management with GitHub Integration
+          async connectToGitHub() {
+            this.githubLoading = true;
+            this.githubError = null;
+            
+            try {
+              // For this implementation, we'll use the token from session storage
+              const token = sessionStorage.getItem('githubToken') || '';
+              
+              if (!token) {
+                // Redirect to Netlify CMS to login
+                alert('Please connect to GitHub through Netlify CMS first');
+                window.location.href = 'netlify-cms.html';
+                return;
+              }
+              
+              // Set token and test connection
+              githubApi.setToken(token);
+              await githubApi.getContents('');
+              
+              this.isGitHubConnected = true;
+              
+              // Load all posts
+              await this.loadJekyllPosts();
+            } catch (error) {
+              this.githubError = error.message || 'Failed to connect to GitHub';
+              console.error('GitHub connection error:', error);
+            } finally {
+              this.githubLoading = false;
+            }
+          },
+          
+          async loadJekyllPosts() {
+            try {
+              // Get list of all posts
+              const postFiles = await githubApi.listPosts();
+              
+              // Load content for each post
+              const postsPromises = postFiles.map(async (file) => {
+                try {
+                  const fileData = await githubApi.getFile(file.path);
+                  const content = fileData.content;
+                  
+                  // Parse front matter and content
+                  const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+                  
+                  if (!frontMatterMatch) {
+                    return null;
+                  }
+                  
+                  const frontMatter = frontMatterMatch[1];
+                  const postContent = frontMatterMatch[2].trim();
+                  
+                  // Parse front matter properties
+                  const title = frontMatter.match(/title:\s*"?([^"\n]*)"?/)?.[1] || '';
+                  const date = frontMatter.match(/date:\s*(.+)/)?.[1] || '';
+                  const category = frontMatter.match(/categories:\s*\[([^\]]+)\]/)?.[1] || '';
+                  const tags = frontMatter.match(/tags:\s*\[([^\]]+)\]/)?.[1] || '';
+                  const image = frontMatter.match(/image:\s*(.+)/)?.[1] || '';
+                  const excerpt = frontMatter.match(/excerpt:\s*"?([^"\n]*)"?/)?.[1] || '';
+                  const featured = (frontMatter.match(/featured:\s*(.+)/)?.[1] || 'false') === 'true';
+                  
+                  // Extract filename for slug
+                  const filename = file.name;
+                  const slug = filename.replace(/^\d{4}-\d{2}-\d{2}-(.+)\.md$/, '$1');
+                  
+                  return {
+                    id: filename,
+                    title,
+                    slug,
+                    date,
+                    dateFormatted: date,
+                    category,
+                    tags,
+                    image,
+                    excerpt,
+                    content: postContent,
+                    metaTitle: frontMatter.match(/seo:\n\s*title:\s*"?([^"\n]*)"?/)?.[1] || '',
+                    metaDescription: frontMatter.match(/seo:\n\s*description:\s*"?([^"\n]*)"?/)?.[1] || '',
+                    published: true,
+                    featured,
+                    views: 0,
+                    sha: fileData.sha,
+                    path: file.path
+                  };
+                } catch (error) {
+                  console.error(`Failed to load post ${file.name}:`, error);
+                  return null;
+                }
+              });
+              
+              const posts = (await Promise.all(postsPromises)).filter(post => post !== null);
+              
+              // Update posts
+              this.allJekyllPosts = posts;
+              this.posts = posts;
+              
+              // Add activity
+              this.addActivity('info', `Loaded ${posts.length} posts from GitHub`);
+            } catch (error) {
+              console.error('Failed to load Jekyll posts:', error);
+              this.githubError = error.message || 'Failed to load posts';
+            }
+          },
+          
+          // Image upload handling
+          async handleImageUpload() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            
+            fileInput.onchange = async (e) => {
+              if (!e.target.files.length) return;
+              
+              try {
+                const file = e.target.files[0];
+                
+                // Check if GitHub is connected
+                if (!this.isGitHubConnected) {
+                  await this.connectToGitHub();
+                  if (!this.isGitHubConnected) {
+                    alert('Please connect to GitHub first');
+                    return;
+                  }
+                }
+                
+                // Generate unique filename
+                const timestamp = new Date().getTime();
+                const filename = `${this.slugify(file.name.split('.')[0])}-${timestamp}.${file.name.split('.').pop()}`;
+                
+                // Upload image
+                const imageUrl = await githubApi.uploadImage(file, filename);
+                
+                // Set the image URL in the post
+                this.currentPost.image = imageUrl;
+                
+                // Add activity
+                this.addActivity('info', `Image <strong>${filename}</strong> was uploaded`);
+              } catch (error) {
+                console.error('Image upload failed:', error);
+                alert(`Error uploading image: ${error.message || 'Unknown error'}`);
+              }
+            };
+            
+            fileInput.click();
+          },
+          
+          // Image insert into content
+          async handleContentImageUpload() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            
+            fileInput.onchange = async (e) => {
+              if (!e.target.files.length) return;
+              
+              try {
+                const file = e.target.files[0];
+                
+                // Check if GitHub is connected
+                if (!this.isGitHubConnected) {
+                  await this.connectToGitHub();
+                  if (!this.isGitHubConnected) {
+                    alert('Please connect to GitHub first');
+                    return;
+                  }
+                }
+                
+                // Generate unique filename
+                const timestamp = new Date().getTime();
+                const filename = `${this.slugify(file.name.split('.')[0])}-${timestamp}.${file.name.split('.').pop()}`;
+                
+                // Upload image
+                const imageUrl = await githubApi.uploadImage(file, filename);
+                
+                // Insert image markdown at cursor position
+                this.insertMarkdown('![', `](${imageUrl})`, 'Image description');
+                
+                // Add activity
+                this.addActivity('info', `Image <strong>${filename}</strong> was inserted into content`);
+              } catch (error) {
+                console.error('Image upload failed:', error);
+                alert(`Error uploading image: ${error.message || 'Unknown error'}`);
+              }
+            };
+            
+            fileInput.click();
+          },
+          
+          // Dashboard Init
+          async initDashboard() {
+            // Check authentication
+            if (localStorage.getItem('adminLoggedIn') !== 'true') {
+              window.location.href = '/admin/';
+              return;
+            }
+            
+            // Load saved config from localStorage
+            const savedPasswordHash = localStorage.getItem('adminPasswordHash');
+            if (savedPasswordHash) {
+              this.adminConfig.passwordHash = savedPasswordHash;
+            }
+            
+            // Load saved profile
+            const profileName = localStorage.getItem('profileName');
+            if (profileName) {
+              this.profileData.name = profileName;
+            }
+            
+            const profileEmail = localStorage.getItem('profileEmail');
+            if (profileEmail) {
+              this.profileData.email = profileEmail;
+            }
+            
+            const profileBio = localStorage.getItem('profileBio');
+            if (profileBio) {
+              this.profileData.bio = profileBio;
+            }
+            
+            // Load saved posts
+            const savedPosts = localStorage.getItem('posts');
+            if (savedPosts) {
+              this.posts = JSON.parse(savedPosts);
+            }
+            
+            // Load saved comments
+            const savedComments = localStorage.getItem('comments');
+            if (savedComments) {
+              this.comments = JSON.parse(savedComments);
+            }
+            
+            // Load saved categories
+            const savedCategories = localStorage.getItem('categories');
+            if (savedCategories) {
+              this.categories = JSON.parse(savedCategories);
+            }
+            
+            // Load saved activities
+            const savedActivities = localStorage.getItem('recentActivity');
+            if (savedActivities) {
+              this.recentActivity = JSON.parse(savedActivities);
+            }
+            
+            // Load site settings
+            const savedSiteSettings = localStorage.getItem('siteSettings');
+            if (savedSiteSettings) {
+              this.siteSettings = JSON.parse(savedSiteSettings);
+            }
+            
+            // Load social settings
+            const savedSocialSettings = localStorage.getItem('socialSettings');
+            if (savedSocialSettings) {
+              this.socialSettings = JSON.parse(savedSocialSettings);
+            }
+            
+            // Load comment settings
+            const savedCommentSettings = localStorage.getItem('commentSettings');
+            if (savedCommentSettings) {
+              this.commentSettings = JSON.parse(savedCommentSettings);
+            }
+            
+            // Load analytics settings
+            const savedAnalyticsSettings = localStorage.getItem('analyticsSettings');
+            if (savedAnalyticsSettings) {
+              this.analyticsSettings = JSON.parse(savedAnalyticsSettings);
+            }
+            
+            // Load notification settings
+            const savedNotificationSettings = localStorage.getItem('notificationSettings');
+            if (savedNotificationSettings) {
+              this.notificationSettings = JSON.parse(savedNotificationSettings);
+            }
+            
+            // Initialize charts
+            this.$nextTick(() => {
+              this.initTrafficChart();
+            });
+            
+            // Watch for traffic period changes
+            this.$watch('trafficPeriod', () => {
+              this.initTrafficChart();
+            });
+            
+            // Check if GitHub is already connected
+            const token = sessionStorage.getItem('githubToken');
+            if (token) {
+              githubApi.setToken(token);
+              this.isGitHubConnected = true;
+              await this.loadJekyllPosts();
+            }
+          }
+        },
+        mounted() {
+          this.initDashboard();
+        }
+      });
+    });
+  </script>
+</body>
+</html> 

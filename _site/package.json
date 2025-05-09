@@ -1,0 +1,11 @@
+﻿{
+  "name": "idea-stream",
+  "version": "1.0.0",
+  "description": "Jekyll blog",
+  "dependencies": {
+    "sharp": "^0.32.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

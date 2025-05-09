@@ -1,0 +1,141 @@
+<section class="comments-wrapper">
+    <div class="comment-tabs mb-4">
+        <ul class="nav nav-tabs" id="commentTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="disqus-tab" data-toggle="tab" href="#disqus-comments" role="tab">Disqus Comments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="custom-tab" data-toggle="tab" href="#custom-comments" role="tab">Site Comments</a>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="tab-content" id="commentTabsContent">
+        <!-- Disqus Comments -->
+        <div class="tab-pane fade show active" id="disqus-comments" role="tabpanel">
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = '{{site.disqus}}'; 
+                var disqus_developer = 0;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = window.location.protocol + '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+        
+        <!-- Custom Comments System -->
+        <div class="tab-pane fade" id="custom-comments" role="tabpanel">
+            <div class="comment-area">
+                <h4 class="mb-4">Leave a Comment</h4>
+                <form id="comment-form" class="comment-form" method="POST" action="https://formspree.io/f/{{site.formspree_id}}">
+                    <input type="hidden" name="post_url" value="{{ page.url }}">
+                    <input type="hidden" name="post_title" value="{{ page.title }}">
+                    
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name*" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email* (will not be published)" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea name="comment" placeholder="Your Comment*" required></textarea>
+                    </div>
+                    
+                    <button type="submit">Post Comment</button>
+                </form>
+                
+                <div class="comments-list">
+                    <!-- Comments will be loaded via JavaScript -->
+                    <div id="comments-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Custom Comment System JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to load comments from a hypothetical API endpoint
+    // In a real implementation, this would fetch from a database
+    function loadComments() {
+        const commentsContainer = document.getElementById('comments-container');
+        const postUrl = window.location.pathname;
+        
+        // For demonstration - in reality, you would fetch from your backend
+        // fetch('/api/comments?post=' + encodeURIComponent(postUrl))
+        //   .then(response => response.json())
+        //   .then(comments => {
+        //     displayComments(comments);
+        //   });
+        
+        // Placeholder demonstration
+        const sampleComments = [
+            {
+                name: 'John Doe',
+                date: '2023-10-15',
+                content: 'Great article! I learned a lot from this post. Looking forward to more content like this.',
+            },
+            {
+                name: 'Jane Smith',
+                date: '2023-10-16',
+                content: 'Thanks for sharing these insights. Very helpful for my project.',
+            }
+        ];
+        
+        displayComments(sampleComments);
+    }
+    
+    // Display comments in the container
+    function displayComments(comments) {
+        const commentsContainer = document.getElementById('comments-container');
+        commentsContainer.innerHTML = '';
+        
+        if (comments.length === 0) {
+            commentsContainer.innerHTML = '<p>No comments yet. Be the first to comment!</p>';
+            return;
+        }
+        
+        comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.className = 'comment';
+            commentElement.innerHTML = `
+                <div class="comment-meta">
+                    <strong>${comment.name}</strong> | <span>${comment.date}</span>
+                </div>
+                <div class="comment-content">
+                    <p>${comment.content}</p>
+                </div>
+            `;
+            commentsContainer.appendChild(commentElement);
+        });
+    }
+    
+    // Handle form submission
+    const commentForm = document.getElementById('comment-form');
+    if (commentForm) {
+        commentForm.addEventListener('submit', function(e) {
+            // This is handled by formspree in this implementation
+            // For a custom backend, you'd prevent default and handle the submission with fetch
+            // e.preventDefault();
+            // submitComment();
+        });
+    }
+    
+    // Load comments when custom tab is selected
+    document.getElementById('custom-tab').addEventListener('click', function() {
+        loadComments();
+    });
+    
+    // If on the custom comments tab by default, load comments
+    if (document.querySelector('#custom-tab.active')) {
+        loadComments();
+    }
+});
+</script>

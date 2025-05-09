@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/images/favicon.ico">
+
+    <!-- SEO -->
+    <title>Prompt Engineering Best Practices: A Guide for AI Professionals | Venkatesh Shivandi | AI & ML Insights, Tutorials & Prompts</title>
+    <meta name="description" content="Master the art of prompt engineering with these expert-level best practices for getting the most out of large language models.">
+    <meta name="keywords" content="prompt engineering, LLM, AI, ChatGPT, GPT-4, language models, AI prompts, best practices">
+
+    <!-- Bootstrap & CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="/assets/css/main.css" rel="stylesheet">
+    <link href="/assets/css/screen.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/assets/images/logo.png" alt="Venkatesh Shivandi">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main role="main">
+        <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <article class="post">
+                <header class="post-header">
+                    <h1 class="post-title">Prompt Engineering Best Practices: A Guide for AI Professionals</h1>
+                    <div class="post-meta">
+                        <time datetime="2023-05-10T00:00:00-04:00">
+                            May 10, 2023
+                        </time>
+                        
+                            • <span class="post-author">
+                                
+                                    Venkatesh Shivandi
+                                
+                            </span>
+                        
+                        
+                            • 
+                            <span class="post-categories">
+                                
+                                <a href="/category/ai/">AI</a>
+                                , 
+                                
+                                <a href="/category/prompt-engineering/">Prompt Engineering</a>
+                                , 
+                                
+                                <a href="/category/machine-learning/">Machine Learning</a>
+                                
+                                
+                            </span>
+                        
+                    </div>
+                </header>
+
+                
+                <div class="post-featured-image">
+                    <img src="/assets/images/prompt-engineering.jpg" alt="Prompt Engineering Best Practices: A Guide for AI Professionals" class="img-fluid">
+                </div>
+                
+
+                <div class="post-content">
+                    <h1 id="prompt-engineering-best-practices-a-guide-for-ai-professionals">Prompt Engineering Best Practices: A Guide for AI Professionals</h1>
+
+<p>As large language models (LLMs) like GPT-4, Claude, and Llama become increasingly powerful, the art of prompt engineering has emerged as a crucial skill for AI professionals. A well-crafted prompt can be the difference between mediocre and exceptional AI outputs. In this comprehensive guide, I’ll share advanced prompt engineering techniques that I’ve developed through extensive experimentation and professional application.</p>
+
+<h2 id="what-is-prompt-engineering">What is Prompt Engineering?</h2>
+
+<p>Prompt engineering is the practice of designing and refining inputs to AI language models to produce desired outputs. It’s a combination of art and science that involves understanding both the capabilities and limitations of these models.</p>
+
+<p>At its core, prompt engineering is about:</p>
+<ul>
+  <li>Communicating clearly with AI models</li>
+  <li>Structuring information effectively</li>
+  <li>Guiding AI reasoning processes</li>
+  <li>Handling context, constraints, and objectives</li>
+</ul>
+
+<h2 id="the-anatomy-of-an-effective-prompt">The Anatomy of an Effective Prompt</h2>
+
+<h3 id="1-clear-instructions">1. Clear Instructions</h3>
+
+<p>The foundation of any effective prompt is clear, unambiguous instructions. Unlike humans, LLMs don’t have the ability to ask for clarification, so your instructions must be precise.</p>
+
+<p><strong>Basic Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>Write a summary of quantum computing.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>Improved Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>Write a 250-word technical summary of quantum computing principles that would be appropriate for a graduate-level physics student. Include key concepts like quantum entanglement, superposition, and quantum gates.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="2-context-setting">2. Context Setting</h3>
+
+<p>Providing context helps the AI understand the domain, audience, purpose, and desired format.</p>
+
+<p><strong>Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>Context: You are creating content for a technical blog aimed at experienced software developers who are familiar with machine learning concepts but new to reinforcement learning.
+
+Task: Write an introduction to reinforcement learning that explains the core concepts of agents, environments, rewards, and policies. Use Python code examples where appropriate.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="3-role-assignment">3. Role Assignment</h3>
+
+<p>Assigning a role to the AI can significantly improve performance by activating relevant “knowledge” and response patterns.</p>
+
+<p><strong>Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>You are an experienced data scientist with expertise in time series analysis. Your task is to explain ARIMA models to a team of business analysts who understand basic statistics but have no experience with time series forecasting.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="4-format-specification">4. Format Specification</h3>
+
+<p>Explicitly defining the format helps ensure the AI’s response meets your structural requirements.</p>
+
+<p><strong>Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>Please format your response as follows:
+- Section 1: Problem Definition (2-3 sentences)
+- Section 2: Solution Approach (4-5 bullet points)
+- Section 3: Implementation Steps (numbered list with 5-7 steps)
+- Section 4: Expected Outcomes (2-3 sentences)
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="5-examples-few-shot-learning">5. Examples (Few-Shot Learning)</h3>
+
+<p>Providing examples demonstrates exactly what you’re looking for and activates the model’s few-shot learning capabilities.</p>
+
+<p><strong>Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre>Convert these informal statements into formal requirements:
+
+Informal: "The app should be fast."
+Formal: "The application shall load within 2 seconds on a standard 4G connection."
+
+Informal: "Users should find it easy to search."
+Formal: "The search function shall return relevant results within 1 second and provide autocomplete suggestions after the user types 3 characters."
+
+Informal: "The system needs good security."
+Formal: [Your conversion here]
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="advanced-techniques-for-ai-professionals">Advanced Techniques for AI Professionals</h2>
+
+<h3 id="1-chain-of-thought-prompting">1. Chain-of-Thought Prompting</h3>
+
+<p>This technique guides the AI through a step-by-step reasoning process, which is particularly useful for complex problems.</p>
+
+<p><strong>Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre>Question: A retailer buys a product for $80 and marks it up by 25%. During a sale, the product is discounted by 20%. What is the final sale price, and what is the retailer's profit margin as a percentage?
+
+Let's solve this step-by-step:
+1. Calculate the original marked-up price.
+2. Calculate the sale price after the discount.
+3. Calculate the profit amount.
+4. Calculate the profit margin as a percentage of the cost.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="2-self-consistency-checking">2. Self-Consistency Checking</h3>
+
+<p>Having the AI verify its own work improves accuracy, especially for mathematical or logical problems.</p>
+
+<p><strong>Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>Solve this probability problem. After providing your solution, verify your answer by checking your work and identifying any potential errors in your reasoning.
+
+Problem: In a group of 30 people, what is the probability that at least two people share the same birthday? Assume 365 days in a year and that birthdays are distributed uniformly.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="3-persona-based-prompting">3. Persona-Based Prompting</h3>
+
+<p>Creating a specific persona or expert panel can help explore different perspectives.</p>
+
+<p><strong>Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>As a panel of experts consisting of:
+1. A deep learning researcher from Google Brain
+2. A software architect with 20 years of experience
+3. A UX designer specialized in accessibility
+
+Evaluate the following approach to building a recommendation system for a digital library:
+[Description of approach]
+
+Provide perspectives from each expert, highlighting concerns, advantages, and suggested improvements.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="4-constraint-optimization">4. Constraint Optimization</h3>
+
+<p>Adding constraints forces the AI to solve problems within specific boundaries.</p>
+
+<p><strong>Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>Design a machine learning pipeline for credit risk assessment with the following constraints:
+- The solution must use only open-source tools
+- Model inference must take less than 100ms per request
+- The system must be explainable for regulatory compliance
+- The solution must work with limited labeled data (fewer than 1000 examples)
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="5-recursive-refinement">5. Recursive Refinement</h3>
+
+<p>Breaking complex tasks into subtasks and using the output of one step as input to the next improves overall quality.</p>
+
+<p><strong>Example:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre>We will design a comprehensive marketing strategy through a recursive process:
+
+Step 1: Generate a customer persona for a SaaS product targeting small business owners.
+Step 2: Using the persona from Step 1, identify key pain points and motivations.
+Step 3: Based on the pain points identified, develop 5 value propositions.
+Step 4: For each value proposition, create a headline and subheadline for an A/B test.
+Step 5: Develop a content calendar based on the most promising value propositions.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="common-pitfalls-to-avoid">Common Pitfalls to Avoid</h2>
+
+<ol>
+  <li><strong>Ambiguity</strong>: Vague instructions lead to unpredictable outputs.</li>
+  <li><strong>Overloading</strong>: Trying to accomplish too much in a single prompt.</li>
+  <li><strong>Lack of constraints</strong>: Not setting boundaries on the response.</li>
+  <li><strong>Ignoring model limitations</strong>: Expecting expertise in very recent or niche topics.</li>
+  <li><strong>Poor formatting</strong>: Making prompts difficult to parse with wall-of-text formatting.</li>
+</ol>
+
+<h2 id="measuring-and-improving-prompt-effectiveness">Measuring and Improving Prompt Effectiveness</h2>
+
+<p>A scientific approach to prompt engineering involves:</p>
+
+<ol>
+  <li><strong>Define success metrics</strong>: What makes a response “good”?</li>
+  <li><strong>A/B testing</strong>: Compare different prompt structures.</li>
+  <li><strong>User feedback</strong>: Collect human evaluations of AI responses.</li>
+  <li><strong>Iterative refinement</strong>: Make incremental improvements.</li>
+  <li><strong>Documentation</strong>: Maintain a library of effective prompts.</li>
+</ol>
+
+<h2 id="real-world-applications">Real-World Applications</h2>
+
+<p>Effective prompt engineering has transformative applications across industries:</p>
+
+<h3 id="software-development">Software Development</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>Review this code for potential security vulnerabilities, focusing on SQL injection, XSS, and CSRF risks:
+
+[Code snippet]
+
+For each vulnerability detected:
+1. Identify the vulnerable line(s)
+2. Explain the potential exploit
+3. Provide fixed code
+4. Suggest additional security measures
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="data-analysis">Data Analysis</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>Analyze this dataset summary and propose an approach for predicting customer churn:
+
+[Dataset description with features and basic statistics]
+
+Include:
+1. Feature engineering recommendations
+2. Model selection with justification
+3. Evaluation methodology
+4. Potential business applications of the model
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="content-creation">Content Creation</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre>Create a content strategy for promoting a new AI-powered productivity tool:
+
+Target audience: Marketing professionals at mid-sized companies
+Key product features: [List features]
+Current market challenges: [List challenges]
+Budget constraints: Limited to digital channels, no paid advertising
+
+Provide:
+1. Content pillars and themes
+2. 10 blog post titles
+3. 5 lead magnet ideas
+4. Distribution channels and tactics
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Prompt engineering is rapidly evolving from an ad-hoc practice to a formalized discipline. As AI models continue to advance, the ability to effectively communicate with and guide these systems will become an increasingly valuable skill.</p>
+
+<p>By mastering the principles and techniques outlined in this guide, you’ll be well-equipped to leverage AI language models to their fullest potential, whether you’re developing AI applications, integrating LLMs into existing workflows, or using these tools to enhance your professional capabilities.</p>
+
+<p>What prompt engineering techniques have you found most effective in your work? Share your experiences in the comments below!</p>
+
+                </div>
+
+                <div class="post-tags">
+                    
+                </div>
+
+                
+                    <section class="comments-wrapper">
+    <div class="comment-tabs mb-4">
+        <ul class="nav nav-tabs" id="commentTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="disqus-tab" data-toggle="tab" href="#disqus-comments" role="tab">Disqus Comments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="custom-tab" data-toggle="tab" href="#custom-comments" role="tab">Site Comments</a>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="tab-content" id="commentTabsContent">
+        <!-- Disqus Comments -->
+        <div class="tab-pane fade show active" id="disqus-comments" role="tabpanel">
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'venkateshshivandi'; 
+                var disqus_developer = 0;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = window.location.protocol + '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+        
+        <!-- Custom Comments System -->
+        <div class="tab-pane fade" id="custom-comments" role="tabpanel">
+            <div class="comment-area">
+                <h4 class="mb-4">Leave a Comment</h4>
+                <form id="comment-form" class="comment-form" method="POST" action="https://formspree.io/f/xgernoyv">
+                    <input type="hidden" name="post_url" value="/blog/2023/05/prompt-engineering-best-practices/">
+                    <input type="hidden" name="post_title" value="Prompt Engineering Best Practices: A Guide for AI Professionals">
+                    
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name*" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email* (will not be published)" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea name="comment" placeholder="Your Comment*" required></textarea>
+                    </div>
+                    
+                    <button type="submit">Post Comment</button>
+                </form>
+                
+                <div class="comments-list">
+                    <!-- Comments will be loaded via JavaScript -->
+                    <div id="comments-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Custom Comment System JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to load comments from a hypothetical API endpoint
+    // In a real implementation, this would fetch from a database
+    function loadComments() {
+        const commentsContainer = document.getElementById('comments-container');
+        const postUrl = window.location.pathname;
+        
+        // For demonstration - in reality, you would fetch from your backend
+        // fetch('/api/comments?post=' + encodeURIComponent(postUrl))
+        //   .then(response => response.json())
+        //   .then(comments => {
+        //     displayComments(comments);
+        //   });
+        
+        // Placeholder demonstration
+        const sampleComments = [
+            {
+                name: 'John Doe',
+                date: '2023-10-15',
+                content: 'Great article! I learned a lot from this post. Looking forward to more content like this.',
+            },
+            {
+                name: 'Jane Smith',
+                date: '2023-10-16',
+                content: 'Thanks for sharing these insights. Very helpful for my project.',
+            }
+        ];
+        
+        displayComments(sampleComments);
+    }
+    
+    // Display comments in the container
+    function displayComments(comments) {
+        const commentsContainer = document.getElementById('comments-container');
+        commentsContainer.innerHTML = '';
+        
+        if (comments.length === 0) {
+            commentsContainer.innerHTML = '<p>No comments yet. Be the first to comment!</p>';
+            return;
+        }
+        
+        comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.className = 'comment';
+            commentElement.innerHTML = `
+                <div class="comment-meta">
+                    <strong>${comment.name}</strong> | <span>${comment.date}</span>
+                </div>
+                <div class="comment-content">
+                    <p>${comment.content}</p>
+                </div>
+            `;
+            commentsContainer.appendChild(commentElement);
+        });
+    }
+    
+    // Handle form submission
+    const commentForm = document.getElementById('comment-form');
+    if (commentForm) {
+        commentForm.addEventListener('submit', function(e) {
+            // This is handled by formspree in this implementation
+            // For a custom backend, you'd prevent default and handle the submission with fetch
+            // e.preventDefault();
+            // submitComment();
+        });
+    }
+    
+    // Load comments when custom tab is selected
+    document.getElementById('custom-tab').addEventListener('click', function() {
+        loadComments();
+    });
+    
+    // If on the custom comments tab by default, load comments
+    if (document.querySelector('#custom-tab.active')) {
+        loadComments();
+    }
+});
+</script>
+
+                
+            </article>
+        </div>
+    </div>
+</div> 
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-container">
+                <div>
+                    <h3 class="footer-logo">Venkatesh Shivandi</h3>
+                    <p>AI-driven insights, machine learning tutorials, and powerful productivity prompts.</p>
+                </div>
+                <div>
+                    <h5 class="footer-title">Quick Links</h5>
+                    <ul class="footer-nav">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="footer-title">Connect</h5>
+                    <div class="footer-social">
+                        
+                        <a href="https://linkedin.com/in/your-linkedin-profile"><i class="fab fa-linkedin"></i></a>
+                        
+                        
+                        <a href="https://twitter.com/your-twitter-handle"><i class="fab fa-twitter"></i></a>
+                        
+                        
+                        <a href="https://github.com/Vishwakarman"><i class="fab fa-github"></i></a>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Venkatesh Shivandi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/mediumish.js"></script>
+    <script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="/assets/js/lazyload.js"></script>
+    
+    <!-- Initialize Lazy Load -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var lazyLoadInstance = new LazyLoad({
+                elements_selector: ".lazy"
+            });
+        });
+    </script>
+
+    <!-- Google Analytics -->
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-46278016-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+</body>
+</html>

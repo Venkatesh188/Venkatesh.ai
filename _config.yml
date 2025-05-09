@@ -1,0 +1,96 @@
+# Site Configuration
+name: "Venkatesh Shivandi"
+title: "Venkatesh Shivandi | AI & ML Insights, Tutorials & Prompts"
+description: "AI-driven insights, machine learning tutorials, and powerful productivity prompts."
+keywords: "AI, ML, tech blog, Venkatesh Shivandi, prompts, self-improvement, machine learning, artificial intelligence"
+author: "Venkatesh Shivandi"
+logo: 'assets/images/logo.png'
+favicon: 'assets/images/favicon.ico'
+baseurl: ""
+url: "https://Venkatesh188.github.io"
+google_analytics: "UA-46278016-1"
+disqus: "venkateshshivandi"
+mailchimp-list: "https://wowthemes.us11.list-manage.com/subscribe/post?u=8aeb20a530e124561927d3bd8&amp;id=8c3d2d214b"
+include: ["_pages"]
+permalink: "/blog/:year/:month/:title/"
+
+# Comment System Configuration
+formspree_id: "xgernoyv" # Replace with your actual FormSpree form ID
+
+# Admin Access (Custom Implementation)
+admin:
+  email: "rajuvenkatesh188@gmail.com"
+  password_hash: "$2a$10$8HgJfBF2t.vvYONHOF1hC.dBQ7oJVsfhAj9s2B2O0F1.Q7c.h4T9W" # Hashed version of "12345678"
+  first_login: true
+  
+# Netlify CMS (Optional)
+netlify_cms: true
+netlify_identity_url: "https://identity.netlify.com/v1/netlify-identity-widget.js"
+
+# Author
+authors:
+  venkatesh:
+    name: "Venkatesh Shivandi"
+    display_name: "Venkatesh Shivandi"
+    avatar: 'assets/images/avatar.png'
+    gravatar: e56154546cf4be74e393c62d1ae9f9d4
+    email: rajuvenkatesh188@gmail.com  # Your actual email
+    web: "https://venkatesh.ai/"
+    #twitter: "https://twitter.com/your-twitter-handle"
+    description: "AI Professional specializing in machine learning, prompt engineering, and AI solutions for business."
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-archives
+    
+# Archives
+jekyll-archives:
+  enabled:
+    - categories
+  layout: archive
+  permalinks:
+    category: '/category/:name/'
+    
+# Pagination
+paginate: 6
+paginate_path: "/blog/page:num/"
+
+# Markdown Processing
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+
+# Adsense (Set to "enabled" if you plan to monetize)
+adsense: "disabled"
+adsense-data-ad-client: "ca-pub-3412143450191416"
+adsense-data-ad-slot: "1363087678"
+
+# Lazy Loading for Images
+lazyimages: "enabled"
+
+# Website Theme Settings
+theme_color: "#3742fa"
+secondary_color: "#5352ed"
+text_color: "#333333"
+background_color: "#ffffff"
+light_background: "#f8f9fa"
+dark_background: "#2c3e50"
+
+# Social Media Links
+social_links:
+  twitter: "https://twitter.com/your-twitter-handle"
+  github: "https://github.com/Vishwakarman"
+  linkedin: "https://linkedin.com/in/your-linkedin-profile"
+  instagram: "https://instagram.com/your-instagram-profile"
+
+# Excluded Files
+exclude: [changelog.md, LICENSE.txt, README.md, Gemfile, Gemfile.lock]
