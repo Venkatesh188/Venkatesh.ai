@@ -1,0 +1,142 @@
+Here's an **optimized prompt** tailored to your existing Jekyll website, while enabling modernization and admin capabilities:
+
+---
+
+### **Prompt for Cursor: Modernize & Extend Jekyll-Based AI Consultant Website**
+
+**Objective:**  
+Transform your existing Jekyll website into a dynamic, professional personal brand platform for an AI consultant. Retain content from your current Jekyll setup but upgrade architecture, design, and functionality to resolve deployment issues and add admin controls.
+
+---
+
+### **Core Requirements:**
+
+1. **Leverage Existing Jekyll Content:**
+   - Use your current `/_posts/` (blog), `/_projects/` (markdown files), and `/_includes/` (components) as the content source.
+   - Convert Jekyll markdown files to work with a modern framework (e.g., Next.js + MDX).
+
+2. **Tech Stack Upgrade:**
+   - **Frontend:** Next.js (for SSR/SSG and easier deployment)
+   - **Styling:** Tailwind CSS (utility-first, mobile-first)
+   - **CMS:** Use **Contentlayer** (for local markdown management) + **TinaCMS** (in-context editing) OR **Sanity.io** (for full admin panel).
+   - **Deployment:** Vercel/Netlify (no Jekyll dependencies).
+
+3. **Admin Panel Features:**
+   - Accessible via `/admin` (not visible publicly).
+   - Enable CRUD operations for:
+     - Blog posts (add/edit/delete with rich text editor).
+     - Projects (update descriptions, links, images).
+     - Contact info/social media (edit links/icons).
+   - Authentication layer (e.g., Clerk.dev or basic password protection for simplicity).
+
+4. **Design Goals:**
+   - Clean, minimalist layout with AI/tech theme (dark mode + neon accents).
+   - Animated hero section with professional photo and tagline.
+   - Filterable project grid (AI, ML, Consulting categories).
+   - Responsive typography for blogs/tutorials.
+   - Icon-based social media footer.
+
+---
+
+### **Implementation Steps:**
+
+#### **1. Extract Content from Jekyll**
+- Copy `/_posts/`, `/_projects/`, and metadata from `_config.yml` (e.g., social links, bio).
+- Convert Jekyll frontmatter to standard markdown (YAML or JSON).
+
+#### **2. Set Up Next.js + Tailwind:**
+```bash
+npx create-next-app ai-consultant-site
+cd ai-consultant-site
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+Configure `tailwind.config.js` for dark mode and content paths.
+
+#### **3. Content Integration:**
+- Use **Contentlayer** to parse markdown:
+  ```bash
+  npm install contentlayer
+  ```
+- Define schemas for `BlogPost` and `Project` in `contentlayer.config.ts`.
+
+#### **4. Admin Panel Setup:**
+- Option A: **TinaCMS** (for editing markdown files locally):
+  ```bash
+  npm install tinacms
+  ```
+  Add Tina provider in `_app.tsx` and create edit forms for posts/projects.
+
+- Option B: **Sanity.io** (for cloud CMS):
+  ```bash
+  npx sanity init
+  sanity start
+  ```
+  Create schemas for blog/posts, projects, and social links.
+
+#### **5. UI Development:**
+- **Pages:**  
+  - `pages/index.tsx` (Hero + Highlights)  
+  - `pages/blog.tsx` (Grid with filters)  
+  - `pages/projects.tsx` (Interactive showcase)  
+  - `pages/about.tsx` (Bio + Expertise)  
+  - `pages/contact.tsx` (Form + Map)
+
+- **Components:**  
+  - `components/Layout.tsx` (Header/Footer)  
+  - `components/BlogCard.tsx` (Preview tiles)  
+  - `components/ProjectGrid.tsx` (Filterable layout)
+
+#### **6. Deployment:**
+- Connect to Vercel:
+  ```bash
+  vercel
+  vercel --prod
+  ```
+- If using Sanity, deploy studio:
+  ```bash
+  sanity deploy <project-name>
+  ```
+
+---
+
+### **Deliverables:**
+
+1. **Codebase Structure:**
+   ```
+   ai-consultant-site/
+   ├── content/              # Migrated Jekyll content
+   │   ├── blog/             # Markdown files
+   │   └── projects/
+   ├── components/           # Reusable UI
+   ├── pages/                # Next.js routes
+   ├── public/               # Static assets
+   ├── tailwind.config.js
+   └── contentlayer.config.ts
+   ```
+
+2. **Documentation:**
+   - How to add new posts via CMS or markdown.
+   - Instructions to customize themes/colors.
+   - Deployment steps for Vercel/Netlify.
+
+3. **Optional Enhancements:**
+   - Newsletter integration (Buttondown or ConvertKit).
+   - SEO metadata (OpenGraph, Twitter Cards).
+   - Dark/light mode toggle.
+
+---
+
+### **Avoid:**
+- Any Jekyll-specific files (`_config.yml`, `_layouts/`).
+- Hardcoding content (ensure all text is CMS-editable or markdown-driven).
+- Overcomplicated animations (keep performance in mind).
+
+---
+
+### **Next Steps:**
+1. Confirm if you want to use **TinaCMS** (local markdown editing) or **Sanity.io** (cloud CMS) for admin.
+2. Share your existing Jekyll `/_posts/` and `/_projects/` structure for precise migration guidance.
+
+Let me know which path you prefer!

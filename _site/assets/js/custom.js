@@ -301,4 +301,52 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+    
+    // Initialize Bootstrap tabs and project/tutorial interactions
+    const tabElements = document.querySelectorAll('[data-bs-toggle="tab"]');
+    if (tabElements.length > 0) {
+        // Make sure Bootstrap is loaded
+        if (typeof bootstrap !== 'undefined') {
+            tabElements.forEach(function(tabEl) {
+                const tab = new bootstrap.Tab(tabEl);
+                
+                tabEl.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    tab.show();
+                });
+            });
+        } else {
+            console.error('Bootstrap JavaScript is not loaded properly');
+        }
+    }
+    
+    // Handle project links with animation
+    const projectLinks = document.querySelectorAll('.project-card a.btn');
+    handleDemoLinks(projectLinks, 'Project');
+    
+    // Handle tutorial links with animation
+    const tutorialLinks = document.querySelectorAll('.tutorial-card a.btn');
+    handleDemoLinks(tutorialLinks, 'Tutorial');
+    
+    // Helper function for demo links
+    function handleDemoLinks(links, type) {
+        if (links.length > 0) {
+            links.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    if (this.getAttribute('href') === '#') {
+                        event.preventDefault();
+                        // Add visual feedback
+                        const card = this.closest('.card');
+                        card.classList.add('shadow-lg');
+                        setTimeout(function() {
+                            card.classList.remove('shadow-lg');
+                        }, 300);
+                        
+                        // Show message that this is a demo
+                        alert(`This is a demo ${type.toLowerCase()}. In a real site, this would link to a detailed ${type.toLowerCase()} page.`);
+                    }
+                });
+            });
+        }
+    }
 }); 
