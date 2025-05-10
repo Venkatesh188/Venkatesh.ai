@@ -1,0 +1,255 @@
+/* Professional Color Scheme Overrides */
+
+:root {
+  /* Primary color - sophisticated navy blue */
+  --primary-color: #2c3e50;
+  --primary-hover: #1a2530;
+  
+  /* Secondary color - elegant teal */
+  --secondary-color: #34495e;
+  --secondary-hover: #2c3c4c;
+  
+  /* Accent colors */
+  --accent-1: #3498db; /* Soft blue */
+  --accent-2: #2ecc71; /* Soft green */
+  --accent-3: #e74c3c; /* Soft red */
+  
+  /* Neutral colors */
+  --light-gray: #f8f9fa;
+  --gray: #e9ecef;
+  --dark-gray: #495057;
+  
+  /* Text colors */
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-light: #f8f9fa;
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+}
+
+/* Badge styles */
+.badge.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.badge.bg-secondary {
+  background-color: var(--secondary-color) !important;
+}
+
+.badge.bg-info {
+  background-color: var(--accent-1) !important;
+}
+
+.badge.bg-success {
+  background-color: var(--accent-2) !important;
+}
+
+.badge.bg-danger {
+  background-color: var(--accent-3) !important;
+}
+
+/* Navbar and footer */
+.navbar {
+  background-color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.site-footer {
+  background-color: var(--primary-color) !important;
+  color: var(--text-light) !important;
+}
+
+/* Card styling */
+.card {
+  border: none !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+}
+
+/* Tab Navigation */
+.nav-tabs .nav-link.active {
+  color: var(--primary-color) !important;
+  border-bottom-color: var(--primary-color) !important;
+  font-weight: 600;
+}
+
+.nav-tabs .nav-link:hover {
+  color: var(--primary-hover) !important;
+}
+
+/* Project and Tutorial cards */
+.project-card, .tutorial-card {
+  border-radius: 8px !important;
+}
+
+.project-card .card-img-top, .tutorial-card .card-img-top {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+}
+
+/* Alert styling */
+.alert-info {
+  background-color: rgba(52, 152, 219, 0.1) !important;
+  border-color: rgba(52, 152, 219, 0.2) !important;
+  color: var(--accent-1) !important;
+}
+
+/* Link styling */
+a {
+  color: var(--accent-1) !important;
+  transition: color 0.2s ease !important;
+}
+
+a:hover {
+  color: var(--primary-color) !important;
+  text-decoration: none !important;
+}
+
+/* Image styling for projects */
+.card-img-top {
+  height: 200px !important;
+  object-fit: cover !important;
+}
+
+/* Hero Section */
+.hero {
+  background-color: var(--light-gray);
+  padding: 80px 0;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.hero h2 {
+  color: var(--secondary-color);
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.hero-buttons {
+  margin-top: 30px;
+}
+
+.btn-secondary {
+  background-color: transparent !important;
+  border: 2px solid var(--primary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+  color: white !important;
+}
+
+/* Services Section */
+.services {
+  padding: 60px 0;
+}
+
+.section-title h2 {
+  color: var(--primary-color);
+  position: relative;
+  display: inline-block;
+  margin-bottom: 40px;
+}
+
+.section-title h2:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 40%;
+  height: 3px;
+  background-color: var(--accent-1);
+}
+
+.service-box {
+  padding: 30px;
+  text-align: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.service-box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.service-box i {
+  color: var(--accent-1);
+  margin-bottom: 20px;
+}
+
+.service-box h3 {
+  color: var(--primary-color);
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+}
+
+/* CTA Section */
+.cta-section {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 80px 0;
+  margin: 60px 0;
+}
+
+.cta-section h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.cta-section p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.cta-section .btn-primary {
+  background-color: white !important;
+  color: var(--primary-color) !important;
+  border: none !important;
+  padding: 12px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.cta-section .btn-primary:hover {
+  background-color: var(--accent-1) !important;
+  color: white !important;
+  transform: translateY(-3px);
+}
+
+/* Featured and Recent Posts */
+.featured-posts, .recent-posts {
+  padding: 60px 0;
+}
+
+.listrecent .card {
+  overflow: hidden;
+  margin-bottom: 30px;
+} 
