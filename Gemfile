@@ -10,6 +10,9 @@ ruby "3.1.0"
 #     bundle exec jekyll serve
 #
 
+# Add the gem for Sass Embedded
+gem 'sass-embedded', '~> 1.60'
+
 # Add Jekyll explicitly
 gem "jekyll", "~> 4.4.1"
 
