@@ -3,10 +3,10 @@
   <channel>
     <title>Venkatesh Shivandi | AI &amp; ML Insights, Tutorials &amp; Prompts</title>
     <description>AI-driven insights, machine learning tutorials, and powerful productivity prompts.</description>
-    <link>https://Venkatesh188.github.io/</link>
-    <atom:link href="https://Venkatesh188.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 09 May 2025 15:25:38 -0400</pubDate>
-    <lastBuildDate>Fri, 09 May 2025 15:25:38 -0400</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 09 May 2025 23:56:33 -0400</pubDate>
+    <lastBuildDate>Fri, 09 May 2025 23:56:33 -0400</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -78,8 +78,8 @@
 &lt;p&gt;&lt;img src=&quot;assets/images/ai-focus.jpg&quot; alt=&quot;AI Focus&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 12 Apr 2025 00:00:00 -0400</pubDate>
-        <link>https://Venkatesh188.github.io/blog/7-ai-prompts-focus/</link>
-        <guid isPermaLink="true">https://Venkatesh188.github.io/blog/7-ai-prompts-focus/</guid>
+        <link>http://localhost:4000/blog/7-ai-prompts-focus/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/7-ai-prompts-focus/</guid>
         
         
         <category>AI</category>
@@ -352,8 +352,8 @@
 &lt;p&gt;Have you managed AI projects? I’d love to hear about your experiences and approaches in the comments below.&lt;/p&gt;
 </description>
         <pubDate>Tue, 15 Aug 2023 00:00:00 -0400</pubDate>
-        <link>https://Venkatesh188.github.io/blog/2023/08/ai-project-management/</link>
-        <guid isPermaLink="true">https://Venkatesh188.github.io/blog/2023/08/ai-project-management/</guid>
+        <link>http://localhost:4000/blog/2023/08/ai-project-management/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2023/08/ai-project-management/</guid>
         
         
         <category>AI</category>
@@ -667,8 +667,8 @@ Provide:
 &lt;p&gt;What prompt engineering techniques have you found most effective in your work? Share your experiences in the comments below!&lt;/p&gt;
 </description>
         <pubDate>Wed, 10 May 2023 00:00:00 -0400</pubDate>
-        <link>https://Venkatesh188.github.io/blog/2023/05/prompt-engineering-best-practices/</link>
-        <guid isPermaLink="true">https://Venkatesh188.github.io/blog/2023/05/prompt-engineering-best-practices/</guid>
+        <link>http://localhost:4000/blog/2023/05/prompt-engineering-best-practices/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2023/05/prompt-engineering-best-practices/</guid>
         
         
         <category>AI</category>
